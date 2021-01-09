@@ -1,4 +1,4 @@
-# 2021-Team3-OpenMinder
+# 2021-OpenMinder
 ## 팀원 소개
 * 팀명 : 오픈마인더(OpenMinder)
 * 팀원 : 신민혜, 이주연, 이하람, 전혜주
