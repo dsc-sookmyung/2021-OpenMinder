@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="openminder.emeal.mapper.account.AccountRepository">
+    <resultMap id="accountResultMap" type="openminder.emeal.domain.account.Account">
+        <id column="ACCOUNT_ID" property="accountId" />
+        <result column="USERNAME" property="username" />
+        <result column="PASSWORD" property="password" />
+        <collection column="USERNAME" property="authorities" javaType="java.util.ArrayList" ofType="Authority" select="findAuthoritiesByUserName" />
+
+    </resultMap>
+
+    <insert id="insertUser" parameterType="account">
+        INSERT INTO account(USERNAME, PASSWORD, IS_ACCOUNT_NON_EXPIRED, IS_ACCOUNT_NON_LOCKED, IS_CREDENTIALS_NON_EXPIRED, IS_ENABLED)
+        VALUES (#{username}, #{password}, #{isAccountNonExpired}, #{isAccountNonLocked}, #{isCredentialsNonExpired}, #{isEnabled})
+    </insert>
+    <insert id="insertUserAuthority" parameterType="authority">
+        INSERT INTO authority(AUTHORITY_NAME, USERNAME)
+        VALUES (#{authorityName}, #{username})
+    </insert>
+
+    <select id="findByUserName" parameterType="String" resultMap="accountResultMap">
+        SELECT * FROM account
+        WHERE username = #{username}
+    </select>
+    <select id="findById" parameterType="long" resultMap="accountResultMap">
+        SELECT * FROM account
+        WHERE account_id = #{accountId}
+    </select>
+    <select id="findAuthoritiesByUserName" parameterType="String" resultType="authority">
+        SELECT * FROM authority
+        WHERE username = #{username}
+    </select>
+    <select id="existsByUsername" parameterType="String" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM account WHERE username = #{username})
+    </select>
+</mapper>
