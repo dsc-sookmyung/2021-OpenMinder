@@ -1,0 +1,1 @@
+export const LOCAL = '192.168.1.6';
