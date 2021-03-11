@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, createContext } from 'react';
 import { Alert, Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
 import { AuthContext } from '../context';
 
-const SignIn = ({ navigation }) => {
+function SignIn({ navigation }) {
 
 
     const [username, setUsername] = useState('');

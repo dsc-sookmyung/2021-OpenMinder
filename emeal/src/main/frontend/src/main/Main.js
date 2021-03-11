@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { Alert, Text, TouchableOpacity, TextInput, View, StyleSheet, Button } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { AuthContext } from '../context';
 
-const Main = ({ navigation }) => {
-
+function Main({ navigation }) {
     const { signOut } = useContext(AuthContext);
   
     return (
@@ -17,6 +18,5 @@ const Main = ({ navigation }) => {
       </View>
     );
   }
-
 
 export default Main;
