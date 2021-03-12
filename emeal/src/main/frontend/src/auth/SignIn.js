@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { Alert, Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
-import { AuthContext } from '../context';
+import { useSelector, useDispatch } from 'react-redux';
+import { signIn } from '../_modules/user';
+
+
 
 const SignIn = ({ navigation }) => {
 
@@ -8,7 +11,27 @@ const SignIn = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const { signIn } = useContext(AuthContext);
+    const user = useSelector(state => state.user)
+    const dispatch = useDispatch();
+
+    const handleSignIn = (username, password) => {
+      dispatch(signIn(username, password));
+      console.log(user.error)
+      if (user.error) {
+        Alert.alert(
+          "Login Failed",
+          "The username or password you've entered doesn't match any account.",
+          [
+            {
+              text: "Cancel",
+              onPress: () => console.log("Cancel Pressed"),
+              style: "cancel"
+            }
+          ],
+          { cancelable: false }
+        );
+      }
+    }
   
     return (
       <View style={styles.container}>
@@ -30,7 +53,7 @@ const SignIn = ({ navigation }) => {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => signIn(username, password)}
+          onPress={() => {handleSignIn(username, password)}}
         >
          <Text style={styles.buttonText}> LOG IN </Text>
         </TouchableOpacity>

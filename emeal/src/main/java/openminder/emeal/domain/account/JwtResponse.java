@@ -8,9 +8,11 @@ public class JwtResponse {
 
     private String accessToken;
     private String tokenType = "Bearer";
+    private String fileDownloadUri;
 
-    public JwtResponse(String accessToken) {
+    public JwtResponse(String accessToken, String fileDownloadUri) {
         this.accessToken = accessToken;
+        this.fileDownloadUri = fileDownloadUri;
     }
 
 }

@@ -3,6 +3,7 @@ package openminder.emeal.controller.account;
 import lombok.RequiredArgsConstructor;
 import openminder.emeal.config.JwtTokenUtil;
 import openminder.emeal.domain.account.*;
+import openminder.emeal.domain.file.UploadFile;
 import openminder.emeal.mapper.account.AccountRepository;
 import openminder.emeal.service.account.AccountService;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @CrossOrigin
@@ -41,7 +43,11 @@ public class AccountController {
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
         String jwt = jwtTokenUtil.generateToken(authenticate);
-        return ResponseEntity.ok(new JwtResponse(jwt));
+
+        UploadFile uploadFile = accountRepository.selectAvatarByUserName(loginRequest.getUsername());
+        String fileDownloadUri = uploadFile.getFileDownloadUri();
+
+        return ResponseEntity.ok(new JwtResponse(jwt, fileDownloadUri));
     }
 
     @PostMapping("/signUp")
@@ -57,6 +63,16 @@ public class AccountController {
         Authority authority = new Authority(AuthorityName.ROLE_USER, signUpRequest.getUsername());
 
         accountService.save(account, authority);
+
+        /** Registering Basic Avatar */
+        UploadFile uploadFile = new UploadFile("basic.png", "/downloadFile/basic.png", "image/png", (long)6909, signUpRequest.getUsername());
+//        uploadFile.setFileName("basic.png");
+//        uploadFile.setFileDownloadUri("/downloadFile/basic.png");
+//        uploadFile.setFileType("image/png");
+//        uploadFile.setSize((long)6909);
+//        uploadFile.setUsername(signUpRequest.getUsername());
+
+        accountRepository.insertAvatar(uploadFile);
 
         return new ResponseEntity(new ApiResponse(true, "User registered successfully"), HttpStatus.OK);
 

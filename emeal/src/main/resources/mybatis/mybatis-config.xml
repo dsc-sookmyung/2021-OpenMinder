@@ -8,5 +8,6 @@
     <typeAliases>
         <typeAlias type="openminder.emeal.domain.account.Account" alias="account" />
         <typeAlias type="openminder.emeal.domain.account.Authority" alias="authority" />
+        <typeAlias type="openminder.emeal.domain.file.UploadFile" alias="uploadFile" />
     </typeAliases>
 </configuration>

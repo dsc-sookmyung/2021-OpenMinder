@@ -6,33 +6,33 @@ import { LOCAL } from '../../ipConfig'
 class AuthenticationService {
 
     executeJwtSignUpService(username, password) {
-        return axios.post(`http://${LOCAL}:8080/api/auth/signUp`, {
+        return axios.post(`${LOCAL}/api/auth/signUp`, {
             username, password
         });
     }
 
     // send username, password to the SERVER
     executeJwtAuthenticationService(username, password) {
-        return axios.post(`http://${LOCAL}:8080/api/auth/signIn`, {
+        return axios.post(`${LOCAL}/api/auth/signIn`, {
             username, password
         });
     }
 
     executeHelloService() {
         console.log("===executeHelloService")
-        return axios.get(`http://${LOCAL}:8080/hello`);
+        return axios.get(`${LOCAL}/hello`);
     }
 
-    async registerSuccessfullLoginForJwt(username, token) {
+    async registerSuccessfullLoginForJwt(username, token, fileDownloadUri) {
         console.log("===registerSuccessfulLoginForJwt===")   
-        const jsonToken = JSON.stringify(token)
-        const jsonUser = JSON.stringify(username)
+        
         console.log('token', token);
         console.log('username', username);
-        console.log('token', jsonToken);
-        console.log('username', jsonUser);
+        console.log('fileDownloadUri', fileDownloadUri);
+        
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('authenticatedUser', username);
+        await AsyncStorage.setItem('fileDownloadUri', LOCAL + fileDownloadUri);
         this.setupAxiosInterceptors();
     }
 
@@ -60,6 +60,7 @@ class AuthenticationService {
             console.log("logout", logout)
             await AsyncStorage.removeItem('authenticatedUser');
             await AsyncStorage.removeItem('token');
+            await AsyncStorage.removeItem('fileDownloadUri');
             logout = await AsyncStorage.getItem('token')
             console.log("logout", logout)
         } catch (e) {

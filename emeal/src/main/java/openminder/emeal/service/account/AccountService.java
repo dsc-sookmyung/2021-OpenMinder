@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import openminder.emeal.domain.account.Account;
 import openminder.emeal.domain.account.AccountPrincipal;
 import openminder.emeal.domain.account.Authority;
+import openminder.emeal.domain.file.UploadFile;
 import openminder.emeal.mapper.account.AccountRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,5 +40,9 @@ public class AccountService implements UserDetailsService {
         accountRepository.insertUser(account);
         accountRepository.insertUserAuthority(authority);
         return account;
+    }
+
+    public void updateAvatar(UploadFile uploadFile) {
+        accountRepository.updateAvatar(uploadFile);
     }
 }

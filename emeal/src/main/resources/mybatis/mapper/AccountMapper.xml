@@ -8,6 +8,7 @@
         <id column="ACCOUNT_ID" property="accountId" />
         <result column="USERNAME" property="username" />
         <result column="PASSWORD" property="password" />
+        <association column="USERNAME" property="avatar" javaType="uploadFile" select="selectAvatarByUserName" />
         <collection column="USERNAME" property="authorities" javaType="java.util.ArrayList" ofType="Authority" select="findAuthoritiesByUserName" />
 
     </resultMap>
@@ -20,6 +21,11 @@
         INSERT INTO authority(AUTHORITY_NAME, USERNAME)
         VALUES (#{authorityName}, #{username})
     </insert>
+    <insert id="insertAvatar" parameterType="uploadFile">
+        INSERT INTO avatar(FILE_NAME, FILE_DOWNLOAD_URI, FILE_TYPE, SIZE, USERNAME)
+        VALUES (#{fileName}, #{fileDownloadUri}, #{fileType}, #{size}, #{username})
+    </insert>
+
 
     <select id="findByUserName" parameterType="String" resultMap="accountResultMap">
         SELECT * FROM account
@@ -36,4 +42,21 @@
     <select id="existsByUsername" parameterType="String" resultType="boolean">
         SELECT EXISTS(SELECT 1 FROM account WHERE username = #{username})
     </select>
+    <select id="selectAvatarByUserName" parameterType="String" resultType="uploadFile">
+        SELECT * FROM avatar
+        WHERE username = #{username}
+    </select>
+
+    <update id="updateAvatar" parameterType="uploadFile">
+        UPDATE avatar SET
+            FILE_NAME = #{fileName},
+            FILE_DOWNLOAD_URI = #{fileDownloadUri},
+            FILE_TYPE = #{fileType},
+            SIZE = #{size}
+        WHERE username = #{username}
+    </update>
+
+    <delete id="deleteAvatar" parameterType="uploadFile">
+        DELETE FROM avatar WHERE username = #{username}
+    </delete>
 </mapper>

@@ -22,6 +22,7 @@ public class AccountPrincipal implements UserDetails {
     @JsonIgnore
     private String password;
 
+
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
