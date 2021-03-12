@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Text, TouchableOpacity, TextInput, View, StyleSheet } from 'react-native';
 import AuthenticationService from './AuthenticationService';
 
-const SignUp = ({ navigation }) => {
+function SignUp({ navigation }) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');

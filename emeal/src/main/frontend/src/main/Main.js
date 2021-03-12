@@ -24,5 +24,4 @@ const Main = ({ navigation }) => {
     );
   }
 
-
 export default Main;

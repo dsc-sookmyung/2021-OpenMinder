@@ -5,7 +5,7 @@ import { signIn } from '../_modules/user';
 
 
 
-const SignIn = ({ navigation }) => {
+function SignIn({ navigation }) {
 
 
     const [username, setUsername] = useState('');

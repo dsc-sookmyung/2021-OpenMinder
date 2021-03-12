@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button } from 'react-native';
 import AuthenticationService from './AuthenticationService';
 
-const Welcome = () => {
+function Welcome() {
 
     const [welcomeMessage, setWelcomeMessage] = useState('');
 
