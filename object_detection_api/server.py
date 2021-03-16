@@ -11,7 +11,10 @@ def getfoodname():
 
 
 def getnutrients(foodname):
-
+    
+    logger.info("data")
+    logger.info(foodname)
+    
     with open('secret.json') as json_file:
         json_data = json.load(json_file)
     accesskey=json_data['accesskey']
