@@ -5,6 +5,14 @@ import pandas as pd
 import logging
 from pandas.io.json import json_normalize
 
+# 소켓을 사용하기 위해서는 socket을 import해야 한다.
+import socket, threading;
+
+import sys
+if sys.version_info <= (2,7):
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+
 def getfoodname():
     """이미지 인식해서 모델명 받아오는 코드"""
     """여기서 함수를 3개 만들어서 함수명으로 알아보기 쉽게 하는게 좋을지 아니면 getfoodname에서 nurtrients불러와서 한번에 리턴하는게 좋을지.."""
