@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
@@ -44,5 +46,10 @@ public class AccountService implements UserDetailsService {
 
     public void updateAvatar(UploadFile uploadFile) {
         accountRepository.updateAvatar(uploadFile);
+    }
+
+    public int updateAccount(Account account) {
+        int result = accountRepository.updateAccount(account);
+        return result;
     }
 }

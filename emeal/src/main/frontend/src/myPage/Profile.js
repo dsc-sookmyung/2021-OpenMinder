@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { Icon, Container, Content, Header, Left, Body, Right, Button } from 'native-base';
+import { useSelector } from 'react-redux';
 
 var images=[
     require('../../assets/1.jpg'),
@@ -16,7 +17,12 @@ var images=[
 ]
 
 var {width,height} = Dimensions.get('window')
+
+
+
 class Profile extends Component {
+
+
     static navigationOptions = {
         tabBarIcon: ({ tintColor }) => (
             < Icon name='person' style={{color:tintColor}} />
@@ -26,7 +32,8 @@ class Profile extends Component {
         super(props)
  
         this.state = {
-            activeIndex: 0
+            activeIndex: 0,
+            avatar: user.avatarDownloadUri
         };
     }
  
@@ -78,7 +85,7 @@ class Profile extends Component {
                     <View style={{paddingTop:10}}>
                         <View style={{flexDirection:'row'}}>
                             <View style={{flex:1, alignItems:'center'}}>
-                                <Image source={require('../../assets/sea.jpg')}
+                                <Image source={{ uri: avatar }}
                                 style={{width:75, height:75, borderRadius:37.5}}/>
                             </View>
                             <View style={{flex:3}}>
@@ -99,7 +106,7 @@ class Profile extends Component {
                                 <View style={{flexDirection:'row'}}>
                                     <Button bordered dark
                                         style={{flex:1, justifyContent:'center', height:30, marginHorizontal:10, marginTop:10}}
-                                        onPress={() => this.props.navigation.navigate('EditProfile')}>
+                                        onPress={() => this.props.navigation.navigate('UpdateProfile')}>
                                         <Text>프로필 수정</Text>
                                     </Button>
                                 </View>

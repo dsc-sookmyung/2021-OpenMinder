@@ -6,6 +6,7 @@ import openminder.emeal.domain.account.*;
 import openminder.emeal.domain.file.UploadFile;
 import openminder.emeal.mapper.account.AccountRepository;
 import openminder.emeal.service.account.AccountService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,13 +15,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AccountController {
+
 
     final AuthenticationManager authenticationManager;
     final AccountRepository accountRepository;
@@ -28,7 +32,7 @@ public class AccountController {
     final PasswordEncoder passwordEncoder;
     final JwtTokenUtil jwtTokenUtil;
 
-    @PostMapping("/signIn")
+    @PostMapping("/api/auth/signIn")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         System.out.println("signIn: " + loginRequest.getUsername());
         Authentication authenticate = authenticationManager.authenticate(
@@ -47,17 +51,22 @@ public class AccountController {
         UploadFile uploadFile = accountRepository.selectAvatarByUserName(loginRequest.getUsername());
         String fileDownloadUri = uploadFile.getFileDownloadUri();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, fileDownloadUri));
+        Account account = accountRepository.findByUserName(loginRequest.getUsername());
+        String userId = account.getUserId();
+        String goal = account.getGoal();
+
+        return ResponseEntity.ok(new JwtResponse(jwt, fileDownloadUri, userId, goal));
     }
 
-    @PostMapping("/signUp")
+    @PostMapping("/api/auth/signUp")
     public ResponseEntity<?> registerUser(@RequestBody SignUpRequest signUpRequest) {
         if (accountRepository.existsByUsername(signUpRequest.getUsername())) {
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
-        Account account = new Account(signUpRequest.getUsername(), signUpRequest.getPassword(), true, true, true, true);
+//        Account account = new Account(signUpRequest.getUsername(), signUpRequest.getPassword(), true, true, true, true);
+        Account account = new Account(signUpRequest.getUsername(), signUpRequest.getUsername(), signUpRequest.getPassword(), true, true, true, true);
         account.setPassword(passwordEncoder.encode(account.getPassword()));
 
         Authority authority = new Authority(AuthorityName.ROLE_USER, signUpRequest.getUsername());
@@ -66,15 +75,17 @@ public class AccountController {
 
         /** Registering Basic Avatar */
         UploadFile uploadFile = new UploadFile("basic.png", "/downloadFile/basic.png", "image/png", (long)6909, signUpRequest.getUsername());
-//        uploadFile.setFileName("basic.png");
-//        uploadFile.setFileDownloadUri("/downloadFile/basic.png");
-//        uploadFile.setFileType("image/png");
-//        uploadFile.setSize((long)6909);
-//        uploadFile.setUsername(signUpRequest.getUsername());
-
         accountRepository.insertAvatar(uploadFile);
 
         return new ResponseEntity(new ApiResponse(true, "User registered successfully"), HttpStatus.OK);
 
     }
+
+    @PostMapping("/updateProfile")
+    public int updateAccount(@RequestParam("username") String username, @RequestParam("userId") String userId, @RequestParam("goal") String goal) {
+        Account account = new Account(username, userId, goal);
+        int result = accountService.updateAccount(account);
+        return result;
+    }
+
 }

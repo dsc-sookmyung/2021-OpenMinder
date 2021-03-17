@@ -17,18 +17,24 @@ function HomeStackScreen() {
   
               if (route.name === 'Main') {
                 iconName = focused
-                  ? 'ios-information-circle'
-                  : 'ios-information-circle-outline';
+                  ? 'ios-restaurant'
+                  : 'ios-restaurant-outline';
               } else if (route.name === 'Community') {
-                iconName = focused ? 'ios-list-box' : 'ios-list';
+                iconName = focused 
+                  ? 'md-planet' 
+                  : 'md-planet-outline';
+              } else if (route.name === 'Profile') {
+                iconName = focused
+                  ? 'md-folder-open'
+                  : 'md-folder-open-outline'
               }
   
               // You can return any component that you like here!
-              return <Icon name={iconName} size={size} color={color} />;
+              return <Icon name={iconName} size={size} style={{color: color}} />;
             },
           })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: '#B4D966',
           inactiveTintColor: 'gray',
           showIcon: true
         }}

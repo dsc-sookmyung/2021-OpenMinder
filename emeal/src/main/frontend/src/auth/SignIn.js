@@ -40,7 +40,7 @@ function SignIn({ navigation }) {
           value={username}
           onChangeText={setUsername}
           placeholder='username'
-          placeholderTextColor = '#F2CE16'
+          placeholderTextColor = 'lightgray'
           style={styles.input}
         />
         <TextInput
@@ -48,7 +48,7 @@ function SignIn({ navigation }) {
           onChangeText={setPassword}
           placeholder={'password'}
           secureTextEntry={true}
-          placeholderTextColor = '#F2CE16'
+          placeholderTextColor = 'lightgray'
           style={styles.input}
         />
         <TouchableOpacity
@@ -70,12 +70,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F2F2F2',
+    backgroundColor: 'white',
   },
   titleText:{
     fontFamily: 'Comfortaa-Bold',
     fontSize: 50,
-    color: '#F2BB16',
+    color: '#B4D966',
     width: 200,
     alignSelf: 'stretch',
     textAlign: 'left',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#F2BB16',
+    backgroundColor: '#B4D966',
     width: 350,
     height: 50,
     padding: 10,
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   buttonText:{
     fontFamily: 'Baskerville',
     fontSize: 20,
-    color: '#F2F2F2',
+    color: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#F2CE16',
+    borderColor: '#B4D966',
     marginVertical: 10,
   },
   reigsterButton: {

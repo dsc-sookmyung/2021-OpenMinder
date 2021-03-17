@@ -14,11 +14,13 @@ const SIGN_OUT_ERROR = 'sign_out_error';
 
 
 /* action */
-export const restoreToken = (token, avatarUri) => {
+export const restoreToken = (token, avatarUri, userId, goal) => {
     return {
         type: 'restore_token',
         token: token,
-        avatarUri: avatarUri
+        avatarUri: avatarUri,
+        userId: userId,
+        goal: goal
     }
 }
 
@@ -29,7 +31,8 @@ export const signIn = (username, password) => async dispatch => {
         .executeJwtAuthenticationService(username, password)
         .then(res => {
             console.log('res.data: ' ,res.data)
-            AuthenticationService.registerSuccessfullLoginForJwt(username, res.data.accessToken, res.data.fileDownloadUri);
+            const data = res.data;
+            AuthenticationService.registerSuccessfullLoginForJwt(username, data.accessToken, data.fileDownloadUri, data.userId, data.goal);
             dispatch({ type: SIGN_IN_SUCCESS, payload: res.data });
         })
         .catch(e => dispatch({ type: SIGN_IN_ERROR, error: e }))
@@ -50,63 +53,71 @@ export const signOut = () => async dispatch => {
 
 /* reducer */
 const initialState = {
-    isLoading: true,
-    isSignout: false,
-    userToken: null,
-    avatarDownloadUri: null,
-    error: null
+        isLoading: true,
+        isSignout: false,
+        userToken: null,
+        avatarDownloadUri: null,
+        userId: null,
+        goal: null,
+        error: null
 }
 
 export default function user(state = initialState, action) {
     switch (action.type) {
         case RESTORE_TOKEN:
             return {
-                ...state,
-                userToken: action.token,
-                isLoading: false,
-                avatarDownloadUri: action.avatarUri,
-                error: null
+                    ...state.data,
+                    userToken: action.token,
+                    isLoading: false,
+                    avatarDownloadUri: action.avatarUri,
+                    userId: action.userId,
+                    goal: action.goal,
+                    error: null
             }
         case SIGN_IN:
             return {
-                ...state, 
-                userToken: null,
-                isLoading: true,
+                    ...state.data, 
+                    userToken: null,
+                    isLoading: true,
             }
         case SIGN_IN_SUCCESS:
             return {
-                ...state,
-                userToken: action.payload.accessToken,
-                isLoading: false,
-                avatarDownloadUri: LOCAL + action.payload.fileDownloadUri,
-                error: null
+                    ...state.data,
+                    userToken: action.payload.accessToken,
+                    isLoading: false,
+                    avatarDownloadUri: LOCAL + action.payload.fileDownloadUri,
+                    userId: action.payload.userId,
+                    goal: action.payload.goal,
+                    error: null
             }
         case SIGN_IN_ERROR:
             return {
-                ...state,
-                error: action.error,
-                isLoading: false,
+                    ...state.data,
+                    error: action.error,
+                    isLoading: false,
             }
         case SIGN_OUT:
             return {
-                ...state,
-                isSignout: true
+                    ...state.data,
+                    isSignout: true
             }   
         case SIGN_OUT_SUCCESS:
             return {
-                ...state,
-                isLoading: false,
-                userToken: null,
-                isSignout: true,
-                avatarDownloadUri: null
+                    ...state.data,
+                    isLoading: false,
+                    userToken: null,
+                    isSignout: true,
+                    avatarDownloadUri: null,
+                    userId: null,
+                    goal: null
             } 
         case SIGN_OUT_ERROR:
             return {
-                ...state,
-                isLoading: true,
-                error: action.error
+                    ...state.data,
+                    isLoading: true,
+                    error: action.error
             }
         default: 
-            return state        
+            return state
     }
 }

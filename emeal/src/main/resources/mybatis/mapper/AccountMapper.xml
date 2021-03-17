@@ -7,15 +7,17 @@
     <resultMap id="accountResultMap" type="openminder.emeal.domain.account.Account">
         <id column="ACCOUNT_ID" property="accountId" />
         <result column="USERNAME" property="username" />
+        <result column="USER_ID" property="userId" />
         <result column="PASSWORD" property="password" />
+        <result column="GOAL" property="goal" />
         <association column="USERNAME" property="avatar" javaType="uploadFile" select="selectAvatarByUserName" />
         <collection column="USERNAME" property="authorities" javaType="java.util.ArrayList" ofType="Authority" select="findAuthoritiesByUserName" />
 
     </resultMap>
 
     <insert id="insertUser" parameterType="account">
-        INSERT INTO account(USERNAME, PASSWORD, IS_ACCOUNT_NON_EXPIRED, IS_ACCOUNT_NON_LOCKED, IS_CREDENTIALS_NON_EXPIRED, IS_ENABLED)
-        VALUES (#{username}, #{password}, #{isAccountNonExpired}, #{isAccountNonLocked}, #{isCredentialsNonExpired}, #{isEnabled})
+        INSERT INTO account(USERNAME, USER_ID, PASSWORD, GOAL, IS_ACCOUNT_NON_EXPIRED, IS_ACCOUNT_NON_LOCKED, IS_CREDENTIALS_NON_EXPIRED, IS_ENABLED)
+        VALUES (#{username}, #{userId}, #{password}, #{goal}, #{isAccountNonExpired}, #{isAccountNonLocked}, #{isCredentialsNonExpired}, #{isEnabled})
     </insert>
     <insert id="insertUserAuthority" parameterType="authority">
         INSERT INTO authority(AUTHORITY_NAME, USERNAME)
@@ -53,6 +55,12 @@
             FILE_DOWNLOAD_URI = #{fileDownloadUri},
             FILE_TYPE = #{fileType},
             SIZE = #{size}
+        WHERE username = #{username}
+    </update>
+    <update id="updateAccount" parameterType="account">
+        UPDATE account SET
+            USER_ID = #{userId},
+            GOAL = #{goal}
         WHERE username = #{username}
     </update>
 

@@ -30,6 +30,8 @@ public interface AccountRepository {
 
     void updateAvatar(UploadFile avatar);
 
+    int updateAccount(Account account);
+
     void deleteAvatar(UploadFile avatar);
 
 }

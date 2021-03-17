@@ -15,7 +15,11 @@ public class Account {
 
     private String username;
 
+    private String userId;
+
     private String password;
+
+    private String goal;
 
     private UploadFile avatar;
 
@@ -30,15 +34,33 @@ public class Account {
 
     }
 
-    public Account(String username, String password,
+    public Account(String username, String userId, String goal) {
+        this.username = username;
+        this.userId = userId;
+        this.goal = goal;
+    }
+
+    public Account(String username, String userId, String password,
                    boolean isAccountNonExpired, boolean isAccountNonLocked,
                    boolean isCredentialsNonExpired, boolean isEnabled) {
         this.username = username;
+        this.userId = userId;
         this.password = password;
         this.isAccountNonExpired = isAccountNonExpired;
         this.isAccountNonLocked = isAccountNonLocked;
         this.isCredentialsNonExpired = isCredentialsNonExpired;
         this.isEnabled = isEnabled;
     }
+
+//    public Account(String username, String password,
+//                   boolean isAccountNonExpired, boolean isAccountNonLocked,
+//                   boolean isCredentialsNonExpired, boolean isEnabled) {
+//        this.username = username;
+//        this.password = password;
+//        this.isAccountNonExpired = isAccountNonExpired;
+//        this.isAccountNonLocked = isAccountNonLocked;
+//        this.isCredentialsNonExpired = isCredentialsNonExpired;
+//        this.isEnabled = isEnabled;
+//    }
 
 }

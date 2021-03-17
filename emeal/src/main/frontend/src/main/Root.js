@@ -30,10 +30,12 @@ console.log(user)
       try {
         token = await AsyncStorage.getItem('token');
         avatarUri = await AsyncStorage.getItem('fileDownloadUri');
+        userId = await AsyncStorage.getItem('userId');
+        goal = await AsyncStorage.getItem('goal');
       } catch (e) {
         console.log(e)
       }
-      dispatch(restoreToken(token, avatarUri));
+      dispatch(restoreToken(token, avatarUri, userId, goal));
     }
     bootstrapAsync();
   }, []);
@@ -47,16 +49,18 @@ console.log(user)
   return (
     
       <NavigationContainer>
-        <Stack.Navigator> 
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false
+          }}
+        > 
           {user.userToken === null ? (
             <>
-              {console.log('login')}
               <Stack.Screen name="SignIn" component={SignIn} />
               <Stack.Screen name="SignUp" component={SignUp} />   
             </>
           ) : (
             <>
-              {console.log('main')}
               <Stack.Screen name="Everyone's Meal" component={HomeStackScreen} /> 
               {/* <Stack.Screen name="Main" component={Main} /> 
               <Stack.Screen name="Welcome" component={Welcome} /> 

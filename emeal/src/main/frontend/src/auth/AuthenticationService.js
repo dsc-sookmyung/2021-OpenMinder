@@ -23,16 +23,24 @@ class AuthenticationService {
         return axios.get(`${LOCAL}/hello`);
     }
 
-    async registerSuccessfullLoginForJwt(username, token, fileDownloadUri) {
+    async registerSuccessfullLoginForJwt(username, token, fileDownloadUri, userId, goal) {
         console.log("===registerSuccessfulLoginForJwt===")   
         
         console.log('token', token);
         console.log('username', username);
         console.log('fileDownloadUri', fileDownloadUri);
+        console.log('userId', userId);
+        console.log('goal', goal);
         
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('authenticatedUser', username);
         await AsyncStorage.setItem('fileDownloadUri', LOCAL + fileDownloadUri);
+        await AsyncStorage.setItem('userId', userId);
+        if (goal === null) {
+            await AsyncStorage.setItem('goal', 'Try To Set Your Goal!');
+        } else {
+            await AsyncStorage.setItem('goal', goal);
+        }
         this.setupAxiosInterceptors();
     }
 
@@ -61,6 +69,8 @@ class AuthenticationService {
             await AsyncStorage.removeItem('authenticatedUser');
             await AsyncStorage.removeItem('token');
             await AsyncStorage.removeItem('fileDownloadUri');
+            await AsyncStorage.removeItem('userId');
+            await AsyncStorage.removeItem('goal');
             logout = await AsyncStorage.getItem('token')
             console.log("logout", logout)
         } catch (e) {
