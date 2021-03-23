@@ -15,8 +15,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('file',type=werkzeug.datastructures.FileStorage, location='files')
 
 
-def predict_food(model_path, file_path):
-    # 예측
+def predict(model_path, file_path):
     # Load the TFLite model and allocate tensors.
     interpreter = tf.lite.Interpreter(model_path=model_path)
     interpreter.allocate_tensors()
@@ -38,41 +37,53 @@ def predict_food(model_path, file_path):
     boxes = interpreter.get_tensor(output_details[0]['index'])[0][:num_det]
     classes = interpreter.get_tensor(output_details[1]['index'])[0][:num_det]
     scores = interpreter.get_tensor(output_details[2]['index'])[0][:num_det]
-    # Return values
+    indexs = [i for i in range(num_det) if scores[i] > 0.9] # score 가 높은 결과만 리턴할 예정
+    
+    # 라벨 이름 셋팅
     label_names = ['김밥', '양념치킨', '짜장면']
     en_label_names = ['Gimbap', 'Chicken', 'Black-bean-sauce noodles']
-    scores_arr = np.array(scores)
-    max_idx = np.argmax(scores_arr)
-    my_score = scores[max_idx]
-    my_label = label_names[int(classes[max_idx])]
-    my_en_label = en_label_names[int(classes[max_idx])]
 
-    label_dict = {'ko_label': my_label, 'en_label': my_en_label, 'score': my_score}
-    return label_dict
-
-
-def predict_nut(foodname):
+    # 식품 영양 DB API 접근을 위한 셋팅
     with open('secret.json') as json_file:
         json_data = json.load(json_file)
     accesskey = json_data['accesskey']
-    encoding_foodname = urllib.parse.quote(foodname)
-
-    url = "http://openapi.foodsafetykorea.go.kr/api/"+accesskey+"/I2790/json/1/21/DESC_KOR="+encoding_foodname
-
-    response = urllib.request.urlopen(url)
-    json_str = response.read().decode("utf-8")
-    json_object = json.loads(json_str)
-
-    df = pd.json_normalize(json_object['I2790']['row'])
-    
     # 순서대로 음식명 열량 / 탄수화물 / 단백질 / 지방 / 당류 / 나트륨 / 콜레스테롤 / 포화지방산 / 트랜스지방
-    nut_names = ['calorie', 'carbohydrate', 'protein', 'fat', 'saccharide', 'sodium', 'cholesterol', 'saturated fatty acid', 'trans fat']
-    nut_dict = {}
-    for i, name in enumerate(nut_names):
-        idxname = 'NUTR_CONT' + str(i+1)
-        value = df[idxname][0]
-        nut_dict[name] = value
-    return nut_dict
+    nut_names = ['calorie', 'carbohydrate', 'protein', 'fat', 'sugars', 'sodium', 'cholesterol', 'fatty_acid', 'trans_fat']
+
+    # 결과 리스트 만들기
+    food_list = list()
+    food_name_set = set() 
+    for index in indexs:
+        # 라벨 변환
+        my_score = scores[index]
+        my_label = label_names[int(classes[index])]
+        my_en_label = en_label_names[int(classes[index])]
+        food_dict = {'ko_label': my_label, 'en_label': my_en_label, 'score': my_score}
+        # 중복 음식 저장 피하기
+        if my_label in food_name_set: 
+            continue
+        else:
+            food_name_set.add(my_label)
+        # 식품 영양 DB API 호출
+        try:
+            foodname = my_label
+            encoding_foodname = urllib.parse.quote(foodname)
+            url = "http://openapi.foodsafetykorea.go.kr/api/"+accesskey+"/I2790/json/1/21/DESC_KOR="+encoding_foodname
+            response = urllib.request.urlopen(url)
+        except:
+            print(my_label)
+        else:
+            json_str = response.read().decode("utf-8")
+            json_object = json.loads(json_str)
+            df = pd.json_normalize(json_object['I2790']['row'])
+            for i, name in enumerate(nut_names):
+                idxname = 'NUTR_CONT' + str(i+1)
+                value = df[idxname][0]
+                food_dict[name] = value
+        # 각 메뉴 저장
+        food_list.append(food_dict)
+
+    return food_list
 
 
 class MyEncoder(json.JSONEncoder):
@@ -105,11 +116,9 @@ class PhotoUpload(Resource):
             photo.save(filepath)
             # 음식 이름 예측하기
             modelpath = "model/model.tflite"
-            label_info = predict_food(modelpath, filepath)
-            # 음식 영양소 정보 가져오기
-            nut_info = predict_nut(label_info['ko_label'])
+            food_info = predict(modelpath, filepath)
             # 결과 리턴
-            return json.dumps({**label_info, **nut_info}, cls=MyEncoder, ensure_ascii=False)
+            return json.dumps(food_info, cls=MyEncoder, ensure_ascii=False)
 
         return {
                 'data':'',
