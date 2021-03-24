@@ -54,8 +54,11 @@ public class AccountController {
         Account account = accountRepository.findByUserName(loginRequest.getUsername());
         String userId = account.getUserId();
         String goal = account.getGoal();
+        Long height = account.getHeight();
+        Long weight = account.getWeight();
+        Long age = account.getAge();
 
-        return ResponseEntity.ok(new JwtResponse(jwt, fileDownloadUri, userId, goal));
+        return ResponseEntity.ok(new JwtResponse(jwt, fileDownloadUri, userId, goal, height, weight, age));
     }
 
     @PostMapping("/api/auth/signUp")
@@ -81,9 +84,15 @@ public class AccountController {
 
     }
 
+//    @PostMapping("/updateProfile")
+//    public int updateAccount(@RequestParam("username") String username, @RequestParam("userId") String userId, @RequestParam("goal") String goal) {
+//        Account account = new Account(username, userId, goal);
+//        int result = accountService.updateAccount(account);
+//        return result;
+//    }
+
     @PostMapping("/updateProfile")
-    public int updateAccount(@RequestParam("username") String username, @RequestParam("userId") String userId, @RequestParam("goal") String goal) {
-        Account account = new Account(username, userId, goal);
+    public int updateAccount(@RequestBody Account account) {
         int result = accountService.updateAccount(account);
         return result;
     }

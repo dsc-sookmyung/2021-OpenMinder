@@ -1,4 +1,4 @@
-package openminder.emeal.config.imageTest;
+package openminder.emeal.config.file;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,5 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class FileStorageProperties {
 
     private String uploadDir;
+
+    private String uploadPictureDir;
 
 }

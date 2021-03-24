@@ -5,12 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { restoreToken } from '../_modules/user';
 
-import Welcome from '../auth/Welcome';
 import SignIn from '../auth/SignIn';
 import SignUp from '../auth/SignUp';
-import Main from './Main';
 import Splash from './Splash';
-import PostDetailPage from '../myPage/PostDetailPage'
 import HomeStackScreen from './HomeStackScreen';
 
 

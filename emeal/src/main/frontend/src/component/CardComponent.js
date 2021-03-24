@@ -1,34 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Card, CardItem, Thumbnail, Body, Left, Right, Button, Icon } from 'native-base';
- 
-class CardComponent extends Component{
-    render(){
-        const images = {
-            '1': require('../../assets/1.jpg'),
-            '2': require('../../assets/2.jpg'),
-            '3': require('../../assets/3.jpg')
-        }
- 
-        return (
-            <Card>
-                <CardItem>
+
+
+function CardComponent(props) {
+
+    const [heartState, setHeartState] = useState(false);
+
+    const handleHeart = () => {
+        setHeartState(heartState => !heartState);
+    }
+
+    return (
+        <Card style={{ marginLeft: 10, marginRight: 10, borderRadius: 10 }}>
+                <CardItem bordered style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
                     <Left>
-                        <Thumbnail source={require('../../assets/sea.jpg')} />
+                        <Thumbnail source={{ uri: props.avatar }} />
                         <Body>
-                            <Text>Beomwoo</Text>
-                            <Text note>2018년 5월 22일</Text>
+                            <Text style={{ fontFamily: 'Comfortaa-Bold' }}>{props.userId}</Text>
+                            <Text note>{props.date}</Text>
                         </Body>
                     </Left>
                 </CardItem>
                 <CardItem>
                     {/* <Image source={require('../assets/react_native.jpg')} style={{height:200, width:null, flex:1}}/> */}
-                    <Image source={images[this.props.imageSource]} style={{height:200, width:null, flex:1}}/>
+                    <Image source={{ uri: props.imageSource }} style={{height:300, width:null, flex:1}}/>
                 </CardItem>
-                <CardItem style={{height:45}}>
+                <CardItem style={{height:40}}>
                     <Left>
-                        <Button transparent>
-                            <Icon name='ios-heart-outline' style={{color:'black'}}/>
+                        <Button transparent onPress={handleHeart}>
+                            {
+                                heartState ?
+                                    <Icon name='ios-heart' style={{color:'black'}}/> :
+                                    <Icon name='ios-heart-outline' style={{color:'black'}}/>
+                            }
                         </Button>
                         <Button transparent>
                             <Icon name='ios-chatbubbles-outline' style={{color:'black'}}/>
@@ -37,21 +42,19 @@ class CardComponent extends Component{
                             <Icon name='ios-send-outline' style={{color:'black'}}/>
                         </Button>
                     </Left>
+                    <Right>
+                        <Text style={{ fontFamily: 'Comfortaa-Bold' }}>{props.likes} Likes</Text>    
+                    </Right>
                 </CardItem>
-                <CardItem style={{ height:40 }}>
-                    {/* <Text>좋아요 101개</Text> */}
-                    <Text>좋아요 {this.props.likes}개</Text>
-                </CardItem>
-                <CardItem>
-                    <Text>
-                        <Text style={{fontWeight:'900'}}>Beomwoo </Text>
-                        #인스타그램 #따라하기 #리액트네이티브</Text>
+                
+                <CardItem style={{ flex: 1, paddingBottom: 20, borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}>
+                    <Text style={{ fontFamily: 'Comfortaa-Bold', marginRight: 10 }}>{props.userId}</Text>
+                    <Text style={{ fontFamily: 'Comfortaa-Regular' }}>{props.content}</Text>
                 </CardItem>
             </Card>
-        );
-    }
+    )
 }
-export default CardComponent;
+
  
 const style = StyleSheet.create({
     container: {
@@ -60,3 +63,5 @@ const style = StyleSheet.create({
         justifyContent: 'center',
     }
 })
+
+export default CardComponent;

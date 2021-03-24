@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Icon, Container, Content, Header, Left, Body, Right, Button, Thumbnail } from 'native-base';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { LOCAL } from '../../ipConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 let images=[
@@ -27,31 +29,44 @@ function ProfilePage({navigation}) {
     const [activeIndex, setActiveIndex] = useState(0);
     const [username, setUsername] = useState(user.userId);
     const [goal, setGoal] = useState(user.goal);
+    const [postData, setPostData] = useState([]);
     console.log('user: ', user);
 
     
 
-    const renderSectionOne = () => {
-        if (images.length > 6) {
-
-        }
-        return images.map((image, index) => {
-            return (
-                <View key={index} style={{width:(width-30)/2, height:(width-30)/2, margin: 5}}>
-                    <Image style={{flex:1, width:undefined, height:undefined}} source = {image} />
-                </View>
-            )
-        })
+    const getPosts = async () => {
+        let name = await AsyncStorage.getItem('authenticatedUser');
+        let config = { params: { username: name }}
+        axios.get(`${LOCAL}/download/userPosts`, config)
+            .then(res => {
+                setPostData(res.data);
+            })
+            .catch(e => console.log(e))
+        
+        // return images.map((image, index) => {
+        //     return (
+        //         <View key={index} style={{width:(width-30)/2, height:(width-30)/2, margin: 5}}>
+        //             <Image style={{flex:1, width:undefined, height:undefined}} source = {image} />
+        //         </View>
+        //     )
+        // })
     }
-  
 
-    const sections = renderSectionOne();
+
+    const renderCards = postData.map((data, index) => 
+        <TouchableOpacity key={index} onPress={() => navigation.navigate('DetailPage', {postId: data.postId})}>
+            <View key={index} style={{width:(width-30)/2, height:(width-30)/2, margin: 5}}>
+                <Image style={{flex:1, width:undefined, height:undefined}} source = {{ uri: LOCAL + data.pictures[0].pictureDownloadUri }} />
+            </View>
+        </TouchableOpacity>
+    )
 
 
     useEffect(() => {
         setAvatar(user.avatarDownloadUri);
         setUsername(user.userId);
         setGoal(user.goal);
+        getPosts();
     }, [user])
 
     return (
@@ -62,6 +77,14 @@ function ProfilePage({navigation}) {
                 <Icon name='ios-pencil' style={{ position: 'relative', right: -50, top: -30 }} onPress={() => navigation.navigate('UpdateProfile')} />
                 <Text style={{ fontFamily: 'Comfortaa-Regular', fontSize: 30 }}>{username}</Text>
                 <Text style={{ fontFamily: 'Comfortaa-Light', fontSize: 15, marginTop: 5 }}>{goal}</Text>
+                <View style={{ paddingTop: 20 }}>
+                    <Button
+                        style={{ backgroundColor: 'white', paddingLeft: 10, paddingRight: 10, borderWidth: 2, borderColor: 'black' }}
+                        onPress={() => navigation.navigate('UploadPost')}
+                    >
+                        <Text style={{ fontFamily: 'Comfortaa-Light' }}>Go To Upload My Post</Text>
+                    </Button>
+                </View>
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: 20, marginBottom: 20, width: 330 }} />
@@ -72,7 +95,8 @@ function ProfilePage({navigation}) {
             </View>
             
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5, marginRight: 5 }}>
-                {sections}
+                {renderCards}
+                
             </View>
             </Content>
         </Container>

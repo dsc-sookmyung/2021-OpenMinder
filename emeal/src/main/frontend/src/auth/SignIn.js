@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   titleText:{
     fontFamily: 'Comfortaa-Bold',
     fontSize: 50,
-    color: '#B4D966',
+    color: '#F2BB16',
     width: 200,
     alignSelf: 'stretch',
     textAlign: 'left',
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#B4D966',
+    backgroundColor: '#F2BB16',
     width: 350,
     height: 50,
     padding: 10,
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#B4D966',
+    borderColor: '#F2BB16',
     marginVertical: 10,
   },
   reigsterButton: {

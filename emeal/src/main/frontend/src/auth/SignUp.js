@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   titleText:{
     fontFamily: 'Comfortaa-Bold',
     fontSize: 50,
-    color: '#B4D966',
+    color: '#F2CE16',
     width: 250,
     alignSelf: 'stretch',
     textAlign: 'left',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignItems: 'center',
-    backgroundColor: '#B4D966',
+    backgroundColor: '#F2CE16',
     width: 350,
     height: 50,
     padding: 10,
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    color: '#F2F2F2'
+    color: 'white'
   },
   input: {
     width: 350,
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     height: 50,
     padding: 10,
     borderWidth: 1,
-    borderColor: '#B4D966',
+    borderColor: '#F2CE16',
     marginVertical: 10,
   },
 });

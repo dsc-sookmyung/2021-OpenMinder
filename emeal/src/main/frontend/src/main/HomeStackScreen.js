@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 
 import Main from './Main';
-import Community from '../community/Community';
+import CommunityRoot from '../community/CommunityRoot';
 import MyPageRoot from '../myPage/MyPageRoot';
 
 const Tab = createBottomTabNavigator();
@@ -17,8 +17,8 @@ function HomeStackScreen() {
   
               if (route.name === 'Main') {
                 iconName = focused
-                  ? 'ios-restaurant'
-                  : 'ios-restaurant-outline';
+                  ? 'home'
+                  : 'home-outline';
               } else if (route.name === 'Community') {
                 iconName = focused 
                   ? 'md-planet' 
@@ -34,13 +34,13 @@ function HomeStackScreen() {
             },
           })}
         tabBarOptions={{
-          activeTintColor: '#B4D966',
+          activeTintColor: '#F2CE16',
           inactiveTintColor: 'gray',
           showIcon: true
         }}
       >
-        <Tab.Screen name="Main" component={Main} />
-        <Tab.Screen name="Community" component={Community} />
+        <Tab.Screen name="Main" component={Main}/>
+        <Tab.Screen name="Community" component={CommunityRoot} options={{ unmountOnBlur: true }} />
         <Tab.Screen name="Profile" component={MyPageRoot} />
       </Tab.Navigator>
     );

@@ -1,6 +1,6 @@
 package openminder.emeal.service.file;
 
-import openminder.emeal.config.imageTest.FileStorageProperties;
+import openminder.emeal.config.file.FileStorageProperties;
 import openminder.emeal.exception.FileDownloadException;
 import openminder.emeal.exception.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;

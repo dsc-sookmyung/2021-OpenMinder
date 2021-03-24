@@ -21,6 +21,14 @@ public class Account {
 
     private String goal;
 
+    private Long height;
+
+    private Long weight;
+
+    private Long age;
+
+    private Long water;
+
     private UploadFile avatar;
 
     private boolean isAccountNonExpired;
@@ -34,10 +42,13 @@ public class Account {
 
     }
 
-    public Account(String username, String userId, String goal) {
+    public Account(String username, String userId, String goal, Long height, Long weight, Long age) {
         this.username = username;
         this.userId = userId;
         this.goal = goal;
+        this.height = height;
+        this.weight = weight;
+        this.age = age;
     }
 
     public Account(String username, String userId, String password,

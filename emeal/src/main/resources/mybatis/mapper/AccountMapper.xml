@@ -60,7 +60,10 @@
     <update id="updateAccount" parameterType="account">
         UPDATE account SET
             USER_ID = #{userId},
-            GOAL = #{goal}
+            GOAL = #{goal},
+            HEIGHT = #{height},
+            WEIGHT = #{weight},
+            AGE = #{age}
         WHERE username = #{username}
     </update>
 

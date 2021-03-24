@@ -23,7 +23,7 @@ class AuthenticationService {
         return axios.get(`${LOCAL}/hello`);
     }
 
-    async registerSuccessfullLoginForJwt(username, token, fileDownloadUri, userId, goal) {
+    async registerSuccessfullLoginForJwt(username, token, fileDownloadUri, userId, goal, height, weight, age) {
         console.log("===registerSuccessfulLoginForJwt===")   
         
         console.log('token', token);
@@ -40,6 +40,21 @@ class AuthenticationService {
             await AsyncStorage.setItem('goal', 'Try To Set Your Goal!');
         } else {
             await AsyncStorage.setItem('goal', goal);
+        }
+        if (height === null) {
+            await AsyncStorage.setItem('height', 'Try To Set Your Height!');
+        } else {
+            await AsyncStorage.setItem('height', height.toString());
+        }
+        if (weight === null) {
+            await AsyncStorage.setItem('weight', 'Try To Set Your Weight!');
+        } else {
+            await AsyncStorage.setItem('weight', weight.toString());
+        }
+        if (age === null) {
+            await AsyncStorage.setItem('age', 'Try To Set Your Age!');
+        } else {
+            await AsyncStorage.setItem('age', age.toString());
         }
         this.setupAxiosInterceptors();
     }

@@ -4,6 +4,8 @@ import { LOCAL } from '../../ipConfig';
 /* type */
 const RESTORE_TOKEN = 'restore_token';
 
+const UPLOAD_POST = 'upload_post';
+
 const SIGN_IN = 'sign_in';
 const SIGN_IN_SUCCESS = 'sign_in_success';
 const SIGN_IN_ERROR = 'sign_in_error';
@@ -24,6 +26,13 @@ export const restoreToken = (token, avatarUri, userId, goal) => {
     }
 }
 
+export const uploadPost = (myPostState) => {
+    return {
+        type: 'upload_post',
+        myPostState: myPostState
+    }
+}
+
 export const signIn = (username, password) => async dispatch => {
     dispatch({ type: SIGN_IN });
     
@@ -32,7 +41,7 @@ export const signIn = (username, password) => async dispatch => {
         .then(res => {
             console.log('res.data: ' ,res.data)
             const data = res.data;
-            AuthenticationService.registerSuccessfullLoginForJwt(username, data.accessToken, data.fileDownloadUri, data.userId, data.goal);
+            AuthenticationService.registerSuccessfullLoginForJwt(username, data.accessToken, data.fileDownloadUri, data.userId, data.goal, data.height, data.weight, data.age);
             dispatch({ type: SIGN_IN_SUCCESS, payload: res.data });
         })
         .catch(e => dispatch({ type: SIGN_IN_ERROR, error: e }))
@@ -59,6 +68,7 @@ const initialState = {
         avatarDownloadUri: null,
         userId: null,
         goal: null,
+        myPostState: false,
         error: null
 }
 
@@ -73,6 +83,11 @@ export default function user(state = initialState, action) {
                     userId: action.userId,
                     goal: action.goal,
                     error: null
+            }
+        case UPLOAD_POST:
+            return {
+                ...state.data,
+                myPostState: action.myPostState
             }
         case SIGN_IN:
             return {
