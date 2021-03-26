@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, TextInput, Text } from 'react-native';
+import { View, Image, TextInput, Text, StyleSheet } from 'react-native';
 import { Button, Picker, Form, Icon, Item } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -70,7 +70,7 @@ function UploadPost() {
             ) : (
                 <Button
                     onPress={selectImage}
-                    style={{ alignItems: 'center', padding: 10, margin: 30 }}>
+                    style={styles.imgButton}>
                         <Text>Add an Image</Text>
                 </Button>
             )}
@@ -103,13 +103,36 @@ function UploadPost() {
             </Item>
            
             <Button
+                style={styles.uploadButton}
                 onPress={uploadPost}
-                style={{ padding: 10, backgroundColor: 'white', borderRadius: 5 }}
             >
                 <Text>Upload My Post</Text>
             </Button>
         </View>
     )
 }
+const styles = StyleSheet.create({
+    uploadButton : {
+        padding: 10, backgroundColor: 'white', borderRadius: 5
+    },
+    imgButton : {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F2BB16',
+        height: 50,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 5,
+        marginBottom: 10,
+    },
+    imageButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        margin: 30
+    }
+})
+
 
 export default UploadPost

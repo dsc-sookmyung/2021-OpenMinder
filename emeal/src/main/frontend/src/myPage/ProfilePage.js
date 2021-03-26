@@ -6,6 +6,7 @@ import axios from 'axios';
 import { LOCAL } from '../../ipConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 let images=[
     require('../../assets/1.jpg'),
     require('../../assets/2.jpg'),
@@ -85,6 +86,14 @@ function ProfilePage({navigation}) {
                         <Text style={{ fontFamily: 'Comfortaa-Light' }}>Go To Upload My Post</Text>
                     </Button>
                 </View>
+                <View style={{ paddingTop: 20 }}>
+                    <Button
+                        style={{ backgroundColor: 'white', paddingLeft: 10, paddingRight: 10, borderWidth: 2, borderColor: 'black' }}
+                        onPress={() => navigation.navigate('ResultPage')}
+                    >
+                        <Text style={{ fontFamily: 'Comfortaa-Light' }}>Go To Result Post</Text>
+                    </Button>
+                </View>
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: 20, marginBottom: 20, width: 330 }} />
@@ -99,6 +108,7 @@ function ProfilePage({navigation}) {
                 
             </View>
             </Content>
+
         </Container>
     )
 }
