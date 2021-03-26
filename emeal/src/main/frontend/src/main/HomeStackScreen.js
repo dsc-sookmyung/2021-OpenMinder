@@ -41,7 +41,7 @@ function HomeStackScreen() {
       >
         <Tab.Screen name="Main" component={Main}/>
         <Tab.Screen name="Community" component={CommunityRoot} options={{ unmountOnBlur: true }} />
-        <Tab.Screen name="Profile" component={MyPageRoot} />
+        <Tab.Screen name="Profile" component={MyPageRoot} options={{ unmountOnBlur: true }} />
       </Tab.Navigator>
     );
   }

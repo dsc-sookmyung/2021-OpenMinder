@@ -11,6 +11,14 @@ function CardComponent(props) {
         setHeartState(heartState => !heartState);
     }
 
+    const formatDate = (date) => {
+        let d = new Date(date)
+        let month = d.getMonth() + 1
+        let day = d.getDate()
+        let year = d.getFullYear();
+        return [year, month, day].join('.');
+    }
+
     return (
         <Card style={{ marginLeft: 10, marginRight: 10, borderRadius: 10 }}>
                 <CardItem bordered style={{ borderTopLeftRadius: 10, borderTopRightRadius: 10 }}>
@@ -18,7 +26,7 @@ function CardComponent(props) {
                         <Thumbnail source={{ uri: props.avatar }} />
                         <Body>
                             <Text style={{ fontFamily: 'Comfortaa-Bold' }}>{props.userId}</Text>
-                            <Text note>{props.date}</Text>
+                            <Text note>{formatDate(props.date)}</Text>
                         </Body>
                     </Left>
                 </CardItem>
