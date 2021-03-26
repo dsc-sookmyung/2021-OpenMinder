@@ -1,1 +1,1 @@
-export const LOCAL = 'http://192.168.1.6:8080';
+export const LOCAL = 'http://192.168.0.12:8080';

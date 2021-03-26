@@ -5,7 +5,7 @@ import calendarPage from './CalendarPage';
 import graphPage from './LineGraphPage';
 import chartPage from './PieChartPage';
 
-/*
+
 function ResultPage({navigation}) {
 
     return (
@@ -44,8 +44,6 @@ function ResultPage({navigation}) {
         </Container>
     )
 }
-payload라고 저 navigate들을 찾을 수 없다고 뜸..
- */
 
 
 export default ResultPage;

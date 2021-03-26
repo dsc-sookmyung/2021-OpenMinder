@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, TextInput, Text, TouchableOpacity, Button, ScrollView } from 'react-native';
+import { View, Image, TextInput, Text, TouchableOpacity, Button, StyleSheet, ScrollView } from 'react-native';
 import { Picker, Form, Icon, Item } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';

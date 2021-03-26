@@ -1,11 +1,5 @@
 import React , {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    processColor,
-    ScrollView,
-    Image,
-} from 'react-native';
+import { StyleSheet, Text, processColor, ScrollView, Image } from 'react-native';
 import {PieChart} from 'react-native-charts-wrapper';
 import _ from 'lodash'
 import { LOCAL } from '../../ipConfig';
