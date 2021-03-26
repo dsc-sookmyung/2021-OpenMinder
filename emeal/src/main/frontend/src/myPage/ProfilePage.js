@@ -56,8 +56,8 @@ function ProfilePage({navigation}) {
 
     const renderCards = postData.map((data, index) => 
         <TouchableOpacity key={index} onPress={() => navigation.navigate('DetailPage', {postId: data.postId})}>
-            <View key={index} style={{width:(width-30)/2, height:(width-30)/2, margin: 5}}>
-                <Image style={{flex:1, width:undefined, height:undefined}} source = {{ uri: LOCAL + data.pictures[0].pictureDownloadUri }} />
+            <View key={index} style={{width:(width-30)/2, height:(width-30)/2, margin: 5 }}>
+                <Image style={{flex:1, width:undefined, height:undefined, borderRadius: 10}} source = {{ uri: LOCAL + data.pictures[0].pictureDownloadUri }} />
             </View>
         </TouchableOpacity>
     )
@@ -97,10 +97,10 @@ function ProfilePage({navigation}) {
             </View>
             <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: 20, marginBottom: 20, width: 330 }} />
-                <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+                {/* <View style={{ flexDirection: 'row', marginBottom: 20 }}>
                     <Text style={{ fontFamily: 'Comfortaa-Light', fontSize: 13, marginRight: 30 }}>POSTS</Text>     
                     <Text style={{ fontFamily: 'Comfortaa-Light', fontSize: 13, marginLeft: 20 }}>BOOKMARKED</Text>
-                </View>
+                </View> */}
             </View>
             
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginLeft: 5, marginRight: 5 }}>

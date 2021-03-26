@@ -91,44 +91,6 @@ function UpdateProfile({navigation}) {
         }
         getPhysicalInfo();
     }, [])
-
-    // const changeAvatar = async () => {
-    //     let username = await AsyncStorage.getItem('authenticatedUser');
-    //     avatarFormData.append('username', username);
-
-    //     console.log('userId: ', newUserId);
-    //     console.log('goal: ', newGoal);
-
-    //     axios.post(`${LOCAL}/updateProfile`, null, {
-    //         params: {
-    //             username: username,
-    //             userId: newUserId,
-    //             goal: newGoal
-    //         }
-    //     }).then(async (res) => {
-    //         console.log('second res.data: ', res.data);
-    //         if (res.data === 1) {
-    //             console.log('userId: ', newUserId);
-    //             console.log('goal: ', newGoal);
-    //             await AsyncStorage.setItem('userId', newUserId);
-    //             await AsyncStorage.setItem('goal', newGoal);
-    //         }
-    //     }).catch(e => console.log(e))
-
-    //     axios.post(`${LOCAL}/uploadFile`, avatarFormData, {
-    //         headers: {
-    //             "Content-Type": `multipart/form-data`,
-    //         }
-    //     }).then(async (res) => {
-    //         console.log('res.data: ', res.data);
-    //         setAvatar(LOCAL + res.data);
-    //         dispatch(restoreToken(user.userToken, LOCAL + res.data, newUserId, newGoal));
-    //         await AsyncStorage.setItem('fileDownloadUri', LOCAL + res.data);
-    //     }).catch(e => console.log(e))  
-
-    // }
-
-
     
     return (
         <Container>
