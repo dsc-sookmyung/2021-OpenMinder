@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import { signOut } from '../_modules/user';
 
 
+
+
 const Main = ({ navigation }) => {
 
   const dispatch = useDispatch();
@@ -20,6 +22,8 @@ const Main = ({ navigation }) => {
           title="Go Detail Page"
           onPress={() => {navigation.navigate('PostDetailPage')}}
         />
+
+
       </View>
     );
   }

@@ -83,6 +83,7 @@ function UploadPost() {
                     />
                 </View>
             ) : (
+
                 <View style={{ paddingTop: 30, paddingBottom: 30 }}>
                     <TouchableOpacity
                         style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#E6E6E6', padding: 10, width: 250, height: 200 }}
@@ -156,7 +157,31 @@ function UploadPost() {
                 </TouchableOpacity>
             </View>
         </ScrollView>
+
     )
 }
+const styles = StyleSheet.create({
+    uploadButton : {
+        padding: 10, backgroundColor: 'white', borderRadius: 5
+    },
+    imgButton : {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F2BB16',
+        height: 50,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 5,
+        marginBottom: 10,
+    },
+    imageButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        margin: 30
+    }
+})
+
 
 export default UploadPost
