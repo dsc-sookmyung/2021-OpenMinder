@@ -13,6 +13,7 @@
         <result column="INSERT_TIME" property="insertTime" />
         <result column="UPDATE_TIME" property="updateTime" />
         <collection column="POST_ID" property="pictures" javaType="java.util.ArrayList" ofType="Picture" select="findPictureByPostId" />
+        <collection column="POST_ID" property="menus" javaType="java.util.ArrayList" ofType="Menu" select="selectMenus" />
     </resultMap>
     <resultMap id="menuResultMap" type="openminder.emeal.domain.post.Menu">
         <id column="MENU_ID" property="menuId" />
@@ -69,4 +70,11 @@
         SELECT * FROM nutrient
         WHERE menu_id = #{menuId}
     </select>
+
+    <update id="updateAccountInfo" parameterType="post">
+        UPDATE post SET
+            USER_ID = #{userId},
+            AVATAR_DOWNLOAD_URI = #{avatarDownloadUri}
+        WHERE username = #{username}
+    </update>
 </mapper>

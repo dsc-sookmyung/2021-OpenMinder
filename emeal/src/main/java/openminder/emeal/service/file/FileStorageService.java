@@ -59,7 +59,8 @@ public class FileStorageService {
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new FileDownloadException("File not found: " + fileName);
+//                throw new FileDownloadException("File not found: " + fileName);
+                return new UrlResource("http://192.168.0.12:8080/downloadPicture/mike.png");
             }
         } catch (MalformedURLException e) {
             throw new FileDownloadException("File not found => " + fileName, e);

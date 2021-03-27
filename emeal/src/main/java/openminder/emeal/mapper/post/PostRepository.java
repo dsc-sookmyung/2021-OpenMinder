@@ -29,4 +29,6 @@ public interface PostRepository {
 
     List<Menu> selectMenus(Long postId);
 
+    void updateAccountInfo(Post post);
+
 }

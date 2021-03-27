@@ -49,4 +49,8 @@ public class PostService {
     public List<Post> findUserPosts(String username) {
         return postRepository.selectUserPosts(username);
     }
+
+    public void updatePostAccountInfo(Post post) {
+        postRepository.updateAccountInfo(post);
+    }
 }

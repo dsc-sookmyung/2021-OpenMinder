@@ -81,6 +81,11 @@ public class PostController {
 
     }
 
+    @PostMapping("update/postAccountInfo")
+    public void updatePostAccountInfo(@RequestBody Post post) {
+        postService.updatePostAccountInfo(post);
+    }
+
     @GetMapping("downloadPicture/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = pictureStorageService.loadFileAsResource(fileName);
