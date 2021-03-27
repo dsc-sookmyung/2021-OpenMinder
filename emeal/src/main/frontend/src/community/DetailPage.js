@@ -84,6 +84,7 @@ function DetailPage({route}) {
                     <>
                     <CardComponent 
                         userId={postData.userId}
+                        mealType={postData.mealType}
                         imageSource={LOCAL + postData.pictures[0].pictureDownloadUri}
                         likes='0'
                         date={postData.insertTime}
