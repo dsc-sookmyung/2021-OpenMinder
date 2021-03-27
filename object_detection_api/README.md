@@ -19,7 +19,7 @@
 3. requirements.txt 설치
    다음 코드를 실행하여, 필요한 라이브러리를 다운 받습니다.
    ```
-   pip install -r requirments.txt
+   pip install -r requirements.txt
    ```
 ## API 실행
 * api.py 를 실행합니다.
