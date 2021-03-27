@@ -26,8 +26,8 @@ function Community({navigation}) {
         return (
             <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => navigation.navigate('DetailPage', {postId: data.postId})}>
             <CardComponent 
-                
                 userId={data.userId}
+                mealType={data.mealType}
                 imageSource={LOCAL + data.pictures[0].pictureDownloadUri}
                 likes='0'
                 date={data.insertTime}

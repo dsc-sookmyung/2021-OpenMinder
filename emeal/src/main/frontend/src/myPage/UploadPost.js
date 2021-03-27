@@ -14,8 +14,11 @@ function UploadPost() {
     const [image, setImage] = useState('');
     const [imageName, setImageName] = useState('');
     const [postCategory, setPostCategory] = useState('');
+    const [mealTime, setMealTime] = useState('BREAKFAST');
+    const [categoryName, setCategoryName] = useState('One Person Household');
     const [content, setContent] = useState('');
-    const [dropdownState, setDropdownState] = useState(false);
+    const [categoryDropdownState, setCategoryDropdownState] = useState(false);
+    const [mealTimeDropdownState, setMealTimeDropdownState] = useState(false);
 
     const user = useSelector(state => state.user);
     const dispatch = useDispatch();
@@ -46,7 +49,7 @@ function UploadPost() {
             content: content,
             userId: userId,
             postType: postCategory,
-            mealType: 'LUNCH',
+            mealType: mealTime,
             username: username,
             avatarDownloadUri: avatar
         }).then(res => {
@@ -59,16 +62,52 @@ function UploadPost() {
                 }
             }).then(res => {
                 console.log('uploadPost: ', res)
+                Alert.alert(
+                    "Successfully Uploaded",
+                    "Your post is successfully uploaded.",
+                    [
+                      { text: "OK", onPress: () => navigation.goBack() }
+                    ]
+                )
             }).catch(e => console.log(e))
         }).catch(e => console.log(e))
     }
 
-    const handleDropdown = () => {
-        setDropdownState(!dropdownState);
+    const handleDropdown = type => {
+        switch (type) {
+            case 0:
+                setCategoryDropdownState(!categoryDropdownState);
+                break;
+            case 1:
+                setMealTimeDropdownState(!mealTimeDropdownState);
+                break;
+            default:
+                break;
+        }
     }
 
     const hadnleCategory = category => {
         setPostCategory(category);
+        switch (category) {
+            case 'OPH':
+                setCategoryName('One Person Household');
+                break;
+            case 'WORKOUT':
+                setCategoryName('Work Out / Health');
+                break;
+            case 'HEALTHCARE':
+                setCategoryName('Recovery / Care');
+                break;
+                case 'VEGAN':
+                setCategoryName('Vegan');
+                break;
+            default:
+            break;
+        }
+    }
+
+    const handleMealTime = time => {
+        setMealTime(time);
     }
 
     return (
@@ -99,16 +138,18 @@ function UploadPost() {
             <View style={{paddingLeft: 5, paddingRight: 5, display: 'flex', marginLeft: 15, marginRight: 15 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between'  }}>
                 <Text style={{ paddingRight: 20, fontFamily: 'Comfortaa-Bold', fontSize: 13 }}>Category</Text>
+                <Text style={{ paddingRight: 20, fontFamily: 'Comfortaa-Bold', fontSize: 13 }}>{categoryName}</Text>
                 {
-                    dropdownState ?
-                        <Icon name='ios-caret-up' style={{ color: 'gray' }} onPress={handleDropdown} /> :
-                        <Icon name='ios-caret-down' style={{ color: 'gray' }} onPress={handleDropdown} />
+                    categoryDropdownState ?
+                        <Icon name='ios-caret-up' style={{ color: 'gray' }} onPress={() => handleDropdown(0)} /> :
+                        <Icon name='ios-caret-down' style={{ color: 'gray' }} onPress={() => handleDropdown(0)} />
                 }
                 
                 </View>
                 {
-                    dropdownState &&
+                    categoryDropdownState &&
                     <View style={{ borderWidth: 1, borderColor: '#D6D6D6' }}>
+                        
                         <TouchableOpacity 
                             style={{ paddingTop: 10, paddingBottom: 10, alignItems: 'center', borderBottomWidth: 1, borderColor: '#D6D6D6' }}
                             onPress={() => hadnleCategory('OPH')}
@@ -119,13 +160,13 @@ function UploadPost() {
                             style={{  paddingTop: 10, paddingBottom: 10, alignItems: 'center', borderBottomWidth: 1, borderColor: '#D6D6D6' }}
                             onPress={() => hadnleCategory('WORKOUT')}
                         >
-                            <Text style={{ fontSize: 10, fontFamily: 'Comfortaa-Medium' }}>Work Out/Health</Text>
+                            <Text style={{ fontSize: 10, fontFamily: 'Comfortaa-Medium' }}>Work Out / Health</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={{  paddingTop: 10, paddingBottom: 10, alignItems: 'center', borderBottomWidth: 1, borderColor: '#D6D6D6' }}
                             onPress={() => hadnleCategory('HEALTHCARE')}
                         >
-                            <Text style={{ fontSize: 10, fontFamily: 'Comfortaa-Medium' }}>Recovery/Care</Text>
+                            <Text style={{ fontSize: 10, fontFamily: 'Comfortaa-Medium' }}>Recovery / Care</Text>
                         </TouchableOpacity>
                         <TouchableOpacity 
                             style={{  paddingTop: 10, paddingBottom: 10, alignItems: 'center' }}
@@ -138,6 +179,45 @@ function UploadPost() {
                
             </View>
             <View style={{ flex: 1, borderBottomWidth: 1, borderColor: '#D6D6D6', marginLeft: 10, marginRight: 10, paddingBottom: 20 }}/>
+
+            <View style={{paddingLeft: 5, paddingRight: 5, paddingTop: 13, display: 'flex', marginLeft: 15, marginRight: 15 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between'  }}>
+                <Text style={{ paddingRight: 20, fontFamily: 'Comfortaa-Bold', fontSize: 13 }}>Meal Time</Text>
+                <Text style={{ paddingRight: 20, fontFamily: 'Comfortaa-Bold', fontSize: 13 }}>{mealTime}</Text>
+                {
+                    mealTimeDropdownState ?
+                        <Icon name='ios-caret-up' style={{ color: 'gray' }} onPress={() => handleDropdown(1)} /> :
+                        <Icon name='ios-caret-down' style={{ color: 'gray' }} onPress={() => handleDropdown(1)} />
+                }
+                
+                </View>
+                {
+                    mealTimeDropdownState &&
+                    <View style={{ borderWidth: 1, borderColor: '#D6D6D6' }}>
+                        <TouchableOpacity 
+                            style={{ paddingTop: 10, paddingBottom: 10, alignItems: 'center', borderBottomWidth: 1, borderColor: '#D6D6D6' }}
+                            onPress={() => handleMealTime('BREAKFAST')}
+                        >
+                            <Text style={{ fontSize: 10, fontFamily: 'Comfortaa-Medium' }}>BREAKFAST</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={{  paddingTop: 10, paddingBottom: 10, alignItems: 'center', borderBottomWidth: 1, borderColor: '#D6D6D6' }}
+                            onPress={() => handleMealTime('LUNCH')}
+                        >
+                            <Text style={{ fontSize: 10, fontFamily: 'Comfortaa-Medium' }}>LUNCH</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity 
+                            style={{  paddingTop: 10, paddingBottom: 10, alignItems: 'center' }}
+                            onPress={() => handleMealTime('DINNER')}
+                        >
+                            <Text style={{ fontSize: 10, fontFamily: 'Comfortaa-Medium' }}>DINNER</Text>
+                        </TouchableOpacity>
+                    </View>
+                }
+               
+            </View>
+            <View style={{ flex: 1, borderBottomWidth: 1, borderColor: '#D6D6D6', marginLeft: 10, marginRight: 10, paddingBottom: 20 }}/>
+
             <View style={{paddingLeft: 5, display: 'flex', marginLeft: 15, marginRight: 15, flexDirection: 'row' }}>
                 <Text style={{ paddingRight: 20, paddingTop: 13, fontFamily: 'Comfortaa-Bold', fontSize: 13 }}>Content</Text>
                 <TextInput
@@ -148,7 +228,7 @@ function UploadPost() {
                 />
             </View>
             <View style={{ flex: 1, borderBottomWidth: 1, borderColor: '#D6D6D6', marginLeft: 10, marginRight: 10, paddingBottom: 20 }}/>
-            <View style={{ paddingTop: 30, alignItems: 'center', justifyContent: 'center', }}>
+            <View style={{ paddingTop: 30, paddingBottom: 30, alignItems: 'center', justifyContent: 'center', }}>
                 <TouchableOpacity 
                     style={{ width: 200, padding: 10, borderWidth: 2, flex: 1, alignItems: 'center' }}
                     onPress={uploadPost}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Item, Container, Header, Thumbnail, Left, Right, Icon, Content } from 'native-base';
-import { Text, TouchableOpacity, View, Button, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, Button, TextInput, Alert } from 'react-native';
 import axios from 'axios';
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -75,6 +75,19 @@ function UpdateProfile({navigation}) {
             setAvatar(LOCAL + res.data);
             dispatch(restoreToken(user.userToken, LOCAL + res.data, userId, goal));
             await AsyncStorage.setItem('fileDownloadUri', LOCAL + res.data);
+
+            axios.post(`${LOCAL}/update/postAccountInfo`, {
+                username: username,
+                userId: userId,
+                avatarDownloadUri: LOCAL + res.data
+            }).then(() => Alert.alert(
+                "Successfully Updated",
+                "Your profile is successfully updated.",
+                [
+                  { text: "OK", onPress: () => navigation.goBack() }
+                ]
+              )
+            ).catch(e => console.log(e))
         }).catch(e => console.log(e))  
 
     }
