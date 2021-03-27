@@ -111,7 +111,7 @@ class PhotoUpload(Resource):
         photo = data['file']
         if photo:
             # 파일 저장
-            filename = 'uploaded_image.png'
+            filename = 'uploaded_image.' + photo.filename.split(".")[-1]
             filepath = os.path.join(UPLOAD_FOLDER,filename)
             photo.save(filepath)
             # 음식 정보 받아오기
