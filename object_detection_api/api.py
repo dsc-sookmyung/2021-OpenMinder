@@ -78,7 +78,7 @@ def predict(model_path, file_path):
             df = pd.json_normalize(json_object['I2790']['row'])
             for i, name in enumerate(nut_names):
                 idxname = 'NUTR_CONT' + str(i+1)
-                value = df[idxname][0]
+                value = int(float(df[idxname][0]))
                 food_dict[name] = value
         # 각 메뉴 저장
         food_list.append(food_dict)
@@ -114,7 +114,7 @@ class PhotoUpload(Resource):
             filename = 'uploaded_image.png'
             filepath = os.path.join(UPLOAD_FOLDER,filename)
             photo.save(filepath)
-            # 음식 이름 예측하기
+            # 음식 정보 받아오기
             modelpath = "model/model.tflite"
             food_info = predict(modelpath, filepath)
             # 결과 리턴

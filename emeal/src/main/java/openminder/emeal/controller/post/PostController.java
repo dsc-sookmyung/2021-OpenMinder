@@ -10,6 +10,10 @@ import openminder.emeal.domain.post.*;
 import openminder.emeal.service.file.FileStorageService;
 import openminder.emeal.service.file.PictureStorageService;
 import openminder.emeal.service.post.PostService;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -20,10 +24,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.*;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,6 +39,11 @@ public class PostController {
     final PostService postService;
     final PictureStorageService pictureStorageService;
     final FileStorageService fileStorageService;
+
+    final String boundary = "*****";
+    final String crlf = "\r\n";
+    final String charset = "UTF-8";
+    JSONArray result = null;
 
     @PostMapping("/upload/foodInfo")
     public Long uploadFoodInfo(@RequestBody Post post) {
@@ -53,12 +63,104 @@ public class PostController {
         Picture pictureInfo = new Picture(pictureName, pictureDownloadUri, picture.getContentType(), picture.getSize(), (long) id);
         postService.uploadPicture(pictureInfo);
 
-        /** flask server 에서 return 한 음식 수만큼 for 문 돌리기 */
+        BufferedReader in = null;
+        try {
+            URL url = new URL("http://127.0.0.1:5000/upload"); // 호출할 url
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+
+            con.setUseCaches(false);
+            con.setDoOutput(true);
+            con.setDoInput(true);
+            con.setConnectTimeout(15000);
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Connection", "Keep-Alive");
+            con.setRequestProperty("Cache-Control", "no-cache");
+            con.setRequestProperty("Content-Type", "multipart/form-data;charset="+charset+";boundary=" + boundary);
+
+            OutputStream httpConnOutputStream = con.getOutputStream();
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(httpConnOutputStream, charset), true);
+
+            /* 파일 데이터를 넣는 부분 */
+            writer.append("--" + boundary).append(crlf);
+            writer.append("Content-Disposition: form-data; name=\"file\"; filename=\"").append(picture.getName()).append("\"").append(crlf);
+            writer.append("Content-Type: ").append(HttpURLConnection.guessContentTypeFromName(picture.getName())).append(crlf);
+            writer.append("Content-Transfer-Encoding: binary").append(crlf);
+            writer.append(crlf);
+            writer.flush();
+
+            File convFile = new File(Objects.requireNonNull(picture.getOriginalFilename()));
+            convFile.createNewFile();
+            FileOutputStream fos = new FileOutputStream(convFile);
+            fos.write(picture.getBytes());
+            fos.close();
+            FileInputStream inputStream = new FileInputStream(convFile);
+            byte[] buffer = new byte[(int) (convFile).length()];
+            int bytesRead = -1;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                httpConnOutputStream.write(buffer, 0, bytesRead);
+            }
+            httpConnOutputStream.flush();
+            inputStream.close();
+            writer.append(crlf);
+            writer.flush();
+
+            writer.append("--" + boundary + "--").append(crlf);
+            writer.close();
+
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
+                try {
+                    in = new BufferedReader(new InputStreamReader(con.getInputStream(), charset));
+                    JSONParser parser = new JSONParser();
+                    Object obj = parser.parse(in);
+                    System.out.println(obj);
+                    result = new JSONArray((String) obj);
+                    in.close();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                in = new BufferedReader(new InputStreamReader(con.getInputStream(), charset));
+                JSONParser parser = new JSONParser();
+                Object obj = parser.parse(in);
+                System.out.println(obj);
+                result = new JSONArray((String) obj);
+                in.close();
+            }
+            con.disconnect();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(in != null) try { in.close(); } catch(Exception e) { e.printStackTrace(); }
+        }
+
+        System.out.println(result);
+
+        /* flask server 에서 return 한 음식 수만큼 for 문 돌리기 */
+        for (int i = 0;i < result.length();i++){
+            JSONObject element = (JSONObject) result.opt(i);
+            String menuName = element.optString("en_label");
+            // upload Menu
+            Menu menu = new Menu(menuName, (long) id);
+            postService.uploadMenu(menu);
+            // upload Nutrient
+            long calorie = Long.parseLong(element.optString("calorie"));
+            long carbohydrate = Long.parseLong(element.optString("carbohydrate"));
+            long protein = Long.parseLong(element.optString("protein"));
+            long fat = Long.parseLong(element.optString("fat"));
+            long sugars = Long.parseLong(element.optString("sugars"));
+            long sodium = Long.parseLong(element.optString("sodium"));
+            long cholesterol = Long.parseLong(element.optString("cholesterol"));
+            long fatty_acid = Long.parseLong(element.optString("fatty_acid"));
+            long trans_fat = Long.parseLong(element.optString("trans_fat"));
+            Nutrient nutrient = new Nutrient(NutrientType.MEAL, calorie, carbohydrate, protein, fat, sugars, sodium, cholesterol, fatty_acid, trans_fat, menu.getMenuId());
+            postService.uploadNutrient(nutrient);
+        }
+        /*
         Menu menu = new Menu("Almond", (long) id);
         postService.uploadMenu(menu);
         Nutrient nutrient = new Nutrient(NutrientType.MEAL, (long) 579, (long) 21, (long) 21, (long) 49, (long) 4, (long) 1, (long) 0, (long) 3, (long) 0, menu.getMenuId());
         postService.uploadNutrient(nutrient);
-
 
         menu.setMenuName("Soy Milk");
         postService.uploadMenu(menu);
@@ -72,9 +174,8 @@ public class PostController {
         nutrient.setSodium((long) 120);
         nutrient.setTransFat((long) 0);
         nutrient.setMenuId(menu.getMenuId());
-
         postService.uploadNutrient(nutrient);
-
+        */
 
         UploadFileResponse uploadFileResponse = new UploadFileResponse(pictureName, pictureDownloadUri, picture.getContentType(), picture.getSize());
         return uploadFileResponse;
