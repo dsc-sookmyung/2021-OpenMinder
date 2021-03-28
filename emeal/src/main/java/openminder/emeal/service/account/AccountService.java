@@ -3,6 +3,7 @@ package openminder.emeal.service.account;
 import lombok.RequiredArgsConstructor;
 import openminder.emeal.domain.account.Account;
 import openminder.emeal.domain.account.AccountPrincipal;
+import openminder.emeal.domain.account.Attendance;
 import openminder.emeal.domain.account.Authority;
 import openminder.emeal.domain.file.UploadFile;
 import openminder.emeal.mapper.account.AccountRepository;
@@ -42,6 +43,14 @@ public class AccountService implements UserDetailsService {
         accountRepository.insertUser(account);
         accountRepository.insertUserAuthority(authority);
         return account;
+    }
+
+    public void insertAttendance(Attendance attendance) {
+        accountRepository.insertAttendance(attendance);
+    }
+
+    public List<Attendance> selectAttendance(Attendance attendance) {
+        return accountRepository.selectAttendance(attendance);
     }
 
     public void updateAvatar(UploadFile uploadFile) {

@@ -9,6 +9,7 @@
         <typeAlias type="openminder.emeal.domain.account.Account" alias="account" />
         <typeAlias type="openminder.emeal.domain.account.Authority" alias="authority" />
         <typeAlias type="openminder.emeal.domain.file.UploadFile" alias="uploadFile" />
+        <typeAlias type="openminder.emeal.domain.account.Attendance" alias="attendance" />
 
         <typeAlias type="openminder.emeal.domain.post.Post" alias="post" />
         <typeAlias type="openminder.emeal.domain.post.Menu" alias="menu" />

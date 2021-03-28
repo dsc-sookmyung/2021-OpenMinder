@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Image, TextInput, Text, TouchableOpacity, Button, StyleSheet, ScrollView } from 'react-native';
-import { Picker, Form, Icon, Item } from 'native-base';
+import { View, Image, TextInput, Text, TouchableOpacity, Alert, StyleSheet, ScrollView } from 'react-native';
+import { Icon } from 'native-base';
 import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,7 +9,7 @@ import axios from 'axios';
 
 import TableComponent from '../component/TableComponent';
 
-function UploadPost() {
+function UploadPost({ navigation }) {
 
     const [image, setImage] = useState('');
     const [imageName, setImageName] = useState('');
@@ -66,7 +66,7 @@ function UploadPost() {
                     "Successfully Uploaded",
                     "Your post is successfully uploaded.",
                     [
-                      { text: "OK", onPress: () => navigation.goBack() }
+                      { text: "OK", onPress: () => navigation.navigate('ProfilePage') }
                     ]
                 )
             }).catch(e => console.log(e))

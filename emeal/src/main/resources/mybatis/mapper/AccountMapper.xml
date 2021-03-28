@@ -27,6 +27,10 @@
         INSERT INTO avatar(FILE_NAME, FILE_DOWNLOAD_URI, FILE_TYPE, SIZE, USERNAME)
         VALUES (#{fileName}, #{fileDownloadUri}, #{fileType}, #{size}, #{username})
     </insert>
+    <insert id="insertAttendance" parameterType="attendance">
+        INSERT INTO attendance(USERNAME, YEAR_AND_MONTH, day)
+        VALUES (#{username}, #{yearAndMonth}, #{day})
+    </insert>
 
 
     <select id="findByUserName" parameterType="String" resultMap="accountResultMap">
@@ -47,6 +51,10 @@
     <select id="selectAvatarByUserName" parameterType="String" resultType="uploadFile">
         SELECT * FROM avatar
         WHERE username = #{username}
+    </select>
+    <select id="selectAttendance" parameterType="attendance" resultType="attendance">
+        SELECT * FROM attendance
+        WHERE username = #{username} AND year_and_month = #{yearAndMonth} AND day = #{day}
     </select>
 
     <update id="updateAvatar" parameterType="uploadFile">

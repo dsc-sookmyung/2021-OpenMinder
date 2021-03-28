@@ -22,7 +22,7 @@ function Community({navigation}) {
             .catch(e => console.log(e))
     }
 
-    const renderCards = postData.reverse().map((data, index) => {
+    const renderCards = postData.slice(0).reverse().map((data, index) => {
         return (
             <TouchableOpacity key={index} activeOpacity={0.8} onPress={() => navigation.navigate('DetailPage', {postId: data.postId})}>
             <CardComponent 
