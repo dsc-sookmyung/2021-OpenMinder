@@ -238,6 +238,11 @@ public class PostController {
 
     }
 
+    @GetMapping("/download/recentPosts")
+    public List<Post> findRecentPosts(@RequestParam("numPosts") Long numPosts) {
+        return postService.findRecentPosts(numPosts);
+    }
+
     @GetMapping("/download/postCategory")
     public List<Post> findPostByPostType(@RequestParam("category") String postType) {
         return postService.findPosts(postType);

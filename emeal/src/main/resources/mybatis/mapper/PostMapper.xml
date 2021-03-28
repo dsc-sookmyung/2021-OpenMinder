@@ -50,6 +50,9 @@
         SELECT * FROM post
         WHERE post_type = #{postType}
     </select>
+    <select id="selectRecentPosts" parameterType="long" resultMap="postResultMap">
+        SELECT * FROM (SELECT * FROM post ORDER BY post_id DESC LIMIT #{numPosts}) as recent_posts;
+    </select>
     <select id="selectUserPosts" parameterType="String" resultMap="postResultMap">
         SELECT * FROM post
         WHERE username = #{username}

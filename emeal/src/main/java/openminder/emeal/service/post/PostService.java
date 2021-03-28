@@ -46,6 +46,8 @@ public class PostService {
         return postRepository.selectPosts(postState);
     }
 
+    public List<Post> findRecentPosts(Long numPosts) { return postRepository.selectRecentPosts(numPosts); }
+
     public List<Post> findUserPosts(String username) {
         return postRepository.selectUserPosts(username);
     }
