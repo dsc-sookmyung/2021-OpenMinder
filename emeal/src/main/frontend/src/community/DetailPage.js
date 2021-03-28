@@ -86,6 +86,8 @@ function DetailPage({route}) {
                         userId={postData.userId}
                         mealType={postData.mealType}
                         imageSource={LOCAL + postData.pictures[0].pictureDownloadUri}
+                        imageWidth={null}
+                        imageHeight={300}
                         likes='0'
                         date={postData.insertTime}
                         content={postData.content}

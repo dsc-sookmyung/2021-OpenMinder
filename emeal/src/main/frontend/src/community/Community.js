@@ -5,19 +5,22 @@ import axios from 'axios';
 import { LOCAL } from '../../ipConfig';
 
 import CardComponent from '../component/CardComponent';
+import SkeletonComponent from '../component/SkeletonComponent';
  
 function Community({navigation}) {
 
-    const [postData, setPostData] = useState([])
+    const [postData, setPostData] = useState([]);
     const [category, setCategory] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const getPosts = (categoryState, categoryNum) => {
         let config = { params: { category: categoryState }}
         axios.get(`${LOCAL}/download/postCategory`, config)
             .then(res => {
-                console.log(res.data)
-                setPostData(res.data)
-                setCategory(categoryNum)
+                console.log(res.data);
+                setPostData(res.data);
+                setCategory(categoryNum);
+                setLoading(false);
             })
             .catch(e => console.log(e))
     }
@@ -29,6 +32,8 @@ function Community({navigation}) {
                 userId={data.userId}
                 mealType={data.mealType}
                 imageSource={LOCAL + data.pictures[0].pictureDownloadUri}
+                imageWidth={null}
+                imageHeight={300}
                 likes='0'
                 date={data.insertTime}
                 content={data.content}
@@ -78,7 +83,14 @@ function Community({navigation}) {
             </View>
             <ScrollView contentContainerStyle={{ alignContent: 'center'}}>
                 <View style={{ flex: 1 }}>
-                {renderCards}
+                {
+                    loading ?
+                    <>
+                        <SkeletonComponent cardWidth={null} cardHeight={null} imageWidth={300} imageHeight={340} />
+                        <SkeletonComponent cardWidth={null} cardHeight={null} imageWidth={300} imageHeight={340} />
+                    </> :
+                    renderCards
+                }
                 </View>
             </ScrollView>
         </Container>

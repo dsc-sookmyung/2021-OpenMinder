@@ -49,7 +49,8 @@ function CardComponent(props) {
                 </CardItem>
                 <CardItem>
                     {/* <Image source={require('../assets/react_native.jpg')} style={{height:200, width:null, flex:1}}/> */}
-                    <Image source={{ uri: props.imageSource }} style={{height:300, width:null, flex:1}}/>
+                    {/* <Image source={{ uri: props.imageSource }} style={{height:300, width:null, flex:1}}/> */}
+                    <Image source={{ uri: props.imageSource }} style={{ height: props.imageHeight, width: props.imageWidth, flex:1}}/>
                 </CardItem>
                 <CardItem style={{height:40}}>
                     <Left>
