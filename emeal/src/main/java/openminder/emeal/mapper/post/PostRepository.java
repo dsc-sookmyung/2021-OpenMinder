@@ -25,6 +25,8 @@ public interface PostRepository {
 
     List<Post> selectPosts(String postType);
 
+    List<Post> selectRecentPosts(Long numPosts);
+
     List<Post> selectUserPosts(String username);
 
     List<Menu> selectMenus(Long postId);
