@@ -269,6 +269,8 @@ public class PostController {
     }
 
 
+
+
 //    @PostMapping("/upload/post/pictures")
 //    public List<UploadFileResponse> uploadPictures(@RequestParam("post") Post post, @RequestParam("pictures") MultipartFile[] pictures) {
 //

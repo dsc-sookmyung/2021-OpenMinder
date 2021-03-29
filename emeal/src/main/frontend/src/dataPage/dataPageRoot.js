@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import calendarPage from './CalendarPage';
-import pieChartPage from './PieChartPage';
-import lineGraphPage from './LineGraphPage';
+import CalendarPage from './CalendarPage';
+import PieChartPage from './PieChartPage';
+import LineGraphPage from './LineGraphPage';
 
 const Stack = createStackNavigator();
 
@@ -14,9 +14,9 @@ function dataPageRoot() {
                 headerShown: false
             }}
         >
-            <Stack.Screen name="calendarPage" component={calendarPage} />
-            <Stack.Screen name="graphPage" component={pieChartPage} />
-            <Stack.Screen name="chartPage" component={lineGraphPage} />
+            <Stack.Screen name="CalendarPage" component={CalendarPage} />
+            <Stack.Screen name="LineGraphPage" component={PieChartPage} />
+            <Stack.Screen name="PieChartPage" component={LineGraphPage} />
         </Stack.Navigator>
     );
 }

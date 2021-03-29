@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Container, Content, Button} from 'native-base';
-import calendarPage from './CalendarPage';
-import graphPage from './LineGraphPage';
-import chartPage from './PieChartPage';
+import LineGraphPage from './LineGraphPage';
+import PieChart from './PieChartPage';
+import CalendarPage from "./CalendarPage";
 
 
 function ResultPage({navigation}) {
@@ -15,7 +15,7 @@ function ResultPage({navigation}) {
                     <View style={{ paddingTop: 20 }}>
                         <Button
                             style={{ backgroundColor: 'white', paddingLeft: 10, paddingRight: 10, borderWidth: 2, borderColor: 'black' }}
-                            onPress={() => navigation.navigate('calendarPage')}
+                            onPress={() => navigation.navigate('CalendarPage')}
                         >
                             <Text style={{ fontFamily: 'Comfortaa-Light' }}>Go To calendar Post</Text>
                         </Button>
@@ -23,7 +23,7 @@ function ResultPage({navigation}) {
                     <View style={{ paddingTop: 20 }}>
                         <Button
                             style={{ backgroundColor: 'white', paddingLeft: 10, paddingRight: 10, borderWidth: 2, borderColor: 'black' }}
-                            onPress={() => navigation.navigate('chartPage')}
+                            onPress={() => navigation.navigate('PieChartPage')}
                         >
                             <Text style={{ fontFamily: 'Comfortaa-Light' }}>Go To chart Post</Text>
                         </Button>
@@ -31,7 +31,7 @@ function ResultPage({navigation}) {
                     <View style={{ paddingTop: 20 }}>
                         <Button
                             style={{ backgroundColor: 'white', paddingLeft: 10, paddingRight: 10, borderWidth: 2, borderColor: 'black' }}
-                            onPress={() => navigation.navigate('graphPage')}
+                            onPress={() => navigation.navigate('LineGraphPage')}
                         >
                             <Text style={{ fontFamily: 'Comfortaa-Light' }}>Go To graph Post</Text>
                         </Button>

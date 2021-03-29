@@ -46,6 +46,8 @@ public class PostService {
         return postRepository.selectNutrients(username);
     }
 
+
+
     public List<Post> findPosts(String postState) {
         return postRepository.selectPosts(postState);
     }

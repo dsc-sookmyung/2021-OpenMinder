@@ -7,7 +7,7 @@ class lineGraphPage extends React.Component{
     constructor() {
         super();
 
-        //3일자 간격으로 (아점저), (아점저), (아점저) 이렇게 가져오기 - x day, y 영양소 합계
+        //x day, y 영양소 합계
         const data1 = [ //carbohydrate
             { x: -2, y: 1 },
             { x: -1, y: 0 },
@@ -62,3 +62,4 @@ class lineGraphPage extends React.Component{
 
 
 export default lineGraphPage;
+
