@@ -31,6 +31,8 @@ public interface PostRepository {
 
     List<Menu> selectMenus(Long postId);
 
+    List<Nutrient> selectNutrients(String username);
+
     void updateAccountInfo(Post post);
 
 }
