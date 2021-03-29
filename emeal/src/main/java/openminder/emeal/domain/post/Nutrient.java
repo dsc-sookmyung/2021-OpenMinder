@@ -3,6 +3,8 @@ package openminder.emeal.domain.post;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter @Setter
 public class Nutrient {
 
@@ -34,13 +36,15 @@ public class Nutrient {
     /** Nutrient : Menu = 1 : 1 */
     private Long menuId;
 
+    private LocalDateTime insertTime;
+
     public Nutrient() {
 
     }
 
     public Nutrient(NutrientType nutrientType, Long calorie, Long carbohydrate, Long protein,
                     Long fat, Long sugars, Long sodium, Long cholesterol, Long fattyAcid,
-                    Long transFat, Long menuId) {
+                    Long transFat, Long menuId, String username) {
 
         this.nutrientType = nutrientType;
         this.calorie = calorie;
@@ -53,5 +57,6 @@ public class Nutrient {
         this.fattyAcid = fattyAcid;
         this.transFat = transFat;
         this.menuId = menuId;
+        this.username = username;
     }
 }

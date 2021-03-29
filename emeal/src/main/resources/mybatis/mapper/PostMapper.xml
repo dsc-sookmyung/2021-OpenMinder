@@ -21,6 +21,23 @@
         <result column="POST_ID" property="postId" />
         <association column="MENU_ID" property="nutrient" javaType="Nutrient" select="findNutrientByMenuId" />
     </resultMap>
+    <resultMap id="nutrientResultMap" type="openminder.emeal.domain.post.Nutrient">
+        <id column="NUTRIENT_ID" property="nutrientId" />
+        <result column="NUTRIENT_TYPE" property="nutrientType" />
+        <result column="CALORIE" property="calorie" />
+        <result column="CARBOHYDRATE" property="carbohydrate" />
+        <result column="PROTEIN" property="protein" />
+        <result column="FAT" property="fat" />
+        <result column="SUGARS" property="sugars" />
+        <result column="SODIUM" property="sodium" />
+        <result column="CHOLESTEROL" property="cholesterol" />
+        <result column="FATTY_ACID" property="fattyAcid" />
+        <result column="TRANS_FAT" property="transFat" />
+        <result column="CARBOHYDRATE" property="carbohydrate" />
+        <result column="MENU_ID" property="menuId" />
+        <result column="USERNAME" property="username" />
+        <result column="INSERT_TIME" property="insertTime" />
+    </resultMap>
 
     <insert id="insertPost" parameterType="post">
         INSERT INTO post(CONTENT, USER_ID, POST_TYPE, MEAL_TYPE, USERNAME, AVATAR_DOWNLOAD_URI)
@@ -64,6 +81,10 @@
     <select id="selectMenus" parameterType="long" resultMap="menuResultMap">
         SELECT * FROM menu
         WHERE post_id = #{postId}
+    </select>
+    <select id="selectNutrients" parameterType="String" resultMap="nutrientResultMap">
+        SELECT SUM(carbohydrate) as carbohydrate, SUM(protein) as protein, SUM(fat) as fat, DATE(insert_time) as date
+        FROM nutrient WHERE username = #{username} GROUP BY date;
     </select>
     <select id="findPictureByPostId" parameterType="long" resultType="picture">
         SELECT * FROM picture

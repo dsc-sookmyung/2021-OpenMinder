@@ -53,7 +53,7 @@ public class PostController {
 
 
     @PostMapping("/upload/post")
-    public UploadFileResponse uploadPost(@RequestParam("picture") MultipartFile picture, @RequestParam("postId") String postId) {
+    public UploadFileResponse uploadPost(@RequestParam("picture") MultipartFile picture, @RequestParam("postId") String postId, @RequestParam("username") String username) {
 
         int id = Integer.parseInt(postId);
 
@@ -153,7 +153,7 @@ public class PostController {
             long cholesterol = Long.parseLong(element.optString("cholesterol"));
             long fatty_acid = Long.parseLong(element.optString("fatty_acid"));
             long trans_fat = Long.parseLong(element.optString("trans_fat"));
-            Nutrient nutrient = new Nutrient(NutrientType.MEAL, calorie, carbohydrate, protein, fat, sugars, sodium, cholesterol, fatty_acid, trans_fat, menu.getMenuId());
+            Nutrient nutrient = new Nutrient(NutrientType.MEAL, calorie, carbohydrate, protein, fat, sugars, sodium, cholesterol, fatty_acid, trans_fat, menu.getMenuId(), username);
             postService.uploadNutrient(nutrient);
         }
         /*
@@ -237,6 +237,11 @@ public class PostController {
     @GetMapping("download/menuAndNutrient")
     public List<Menu> findMenuByPostId(@RequestParam("postId") Long postId) {
         return postService.findMenusByPostId(postId);
+    }
+
+    @GetMapping("download/userNutrients")
+    public List<Nutrient> findNutrientByUsername(@RequestParam("username") String username) {
+        return postService.findNutrientByUsername(username);
     }
 
 

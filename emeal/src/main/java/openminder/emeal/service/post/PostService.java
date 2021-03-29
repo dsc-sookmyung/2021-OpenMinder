@@ -42,6 +42,10 @@ public class PostService {
         return postRepository.selectMenus(postId);
     }
 
+    public List<Nutrient> findNutrientByUsername(String username) {
+        return postRepository.selectNutrients(username);
+    }
+
     public List<Post> findPosts(String postState) {
         return postRepository.selectPosts(postState);
     }
