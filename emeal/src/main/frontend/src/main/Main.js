@@ -9,6 +9,7 @@ import CardComponent from '../component/CardComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DetailPage from '../community/DetailPage';
 import SkeletonComponent from '../component/SkeletonComponent';
+import PieChartComponent from '../dataPage/PieChartComponent'
 
 const Main = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -82,9 +83,11 @@ const Main = ({ navigation }) => {
 
   return (
     <Container style={style.container}>
+      <Content>
       <View style={{ height: 300, backgroundColor: '#F2CE16', borderBottomLeftRadius: 100 }} />
       <View style={{ height: 200, width: 200, borderRadius: 100, bottom: 400, right: 50, backgroundColor: '#ECA90C' }} />
-      <View style={{ position: 'absolute', top: 5, zIndex: 2}}>
+      
+      <View style={{ position: 'relative', bottom: 500}}>
         <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 10, paddingTop: 20, paddingBottom: 20 }}>
           <View>
             <Text style={{ color: '#6E6E6E', fontFamily: 'Comfortaa-Light', fontSize: 15 }}>{user.goal}</Text>
@@ -99,7 +102,7 @@ const Main = ({ navigation }) => {
           <Text style={{ fontFamily: 'Comfortaa-Regular', fontSize: 30, paddingLeft: 10, paddingBottom: 10, color: '#424242' }}>What's New Meal ?</Text>
         </View>
 
-        <Content>
+        
     
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} pagingEnabled={true} >
             {
@@ -115,8 +118,12 @@ const Main = ({ navigation }) => {
           <View>
             <Text style={{ fontFamily: 'Comfortaa-Regular', fontSize: 30, paddingLeft: 10, color: '#424242'}}>My Water</Text>
           </View>
-        </Content>
+          <View>
+            <PieChartComponent />
+          </View>
+        
       </View>
+      </Content>
     </Container>
   );
 }
