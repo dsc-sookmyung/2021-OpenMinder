@@ -9,7 +9,6 @@ import CardComponent from '../component/CardComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DetailPage from '../community/DetailPage';
 import SkeletonComponent from '../component/SkeletonComponent';
-import PieChartComponent from '../dataPage/PieChartComponent'
 
 const Main = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -117,9 +116,6 @@ const Main = ({ navigation }) => {
           </ScrollView>
           <View>
             <Text style={{ fontFamily: 'Comfortaa-Regular', fontSize: 30, paddingLeft: 10, color: '#424242'}}>My Water</Text>
-          </View>
-          <View>
-            <PieChartComponent />
           </View>
         
       </View>
