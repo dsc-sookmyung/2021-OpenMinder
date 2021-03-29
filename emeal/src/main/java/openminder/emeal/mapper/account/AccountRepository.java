@@ -1,6 +1,7 @@
 package openminder.emeal.mapper.account;
 
 import openminder.emeal.domain.account.Account;
+import openminder.emeal.domain.account.Attendance;
 import openminder.emeal.domain.account.Authority;
 import openminder.emeal.domain.file.UploadFile;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,6 +17,8 @@ public interface AccountRepository {
 
     void insertUserAuthority(Authority authority);
 
+    void insertAttendance(Attendance attendance);
+
     Account findByUserName(String username);
 
     Account findById(Long accountId);
@@ -27,6 +30,8 @@ public interface AccountRepository {
     void insertAvatar(UploadFile avatar);
 
     UploadFile selectAvatarByUserName(String username);
+
+    List<Attendance> selectAttendance(Attendance attendance);
 
     void updateAvatar(UploadFile avatar);
 

@@ -3,10 +3,12 @@ package openminder.emeal.controller.post;
 import lombok.RequiredArgsConstructor;
 import openminder.emeal.config.file.FileStorageProperties;
 import openminder.emeal.controller.file.FileUploadController;
+import openminder.emeal.domain.account.Attendance;
 import openminder.emeal.domain.file.Picture;
 import openminder.emeal.domain.file.UploadFile;
 import openminder.emeal.domain.file.UploadFileResponse;
 import openminder.emeal.domain.post.*;
+import openminder.emeal.service.account.AccountService;
 import openminder.emeal.service.file.FileStorageService;
 import openminder.emeal.service.file.PictureStorageService;
 import openminder.emeal.service.post.PostService;
@@ -25,8 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -37,6 +38,7 @@ public class PostController {
     private static final Logger logger = LoggerFactory.getLogger(FileUploadController.class);
 
     final PostService postService;
+    final AccountService accountService;
     final PictureStorageService pictureStorageService;
     final FileStorageService fileStorageService;
 
@@ -48,6 +50,28 @@ public class PostController {
     @PostMapping("/upload/foodInfo")
     public Long uploadFoodInfo(@RequestBody Post post) {
         postService.uploadPost(post);
+
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"));
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        String yearAndMonth = Integer.toString(year) + '_' + month;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        System.out.println(day);
+
+        Attendance attendance = new Attendance();
+        attendance.setUsername(post.getUsername());
+        attendance.setYearAndMonth(yearAndMonth);
+        attendance.setDay(day);
+
+        List<Attendance> attendances = accountService.selectAttendance(attendance);
+
+        System.out.println("attendances.size(): " + attendances.size());
+
+        if (attendances.size() == 0) accountService.insertAttendance(attendance);
+
         return post.getPostId();
     }
 
