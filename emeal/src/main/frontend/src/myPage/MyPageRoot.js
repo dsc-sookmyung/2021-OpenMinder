@@ -25,8 +25,8 @@ function MyPageRoot() {
         <Stack.Screen name="DetailPage" component={DetailPage} />
         <Stack.Screen name="ResultPage" component={ResultPage} />
           <Stack.Screen name="CalendarPage" component={CalendarPage} />
-          <Stack.Screen name="LineGraphPage" component={PieChartPage} />
-          <Stack.Screen name="PieChartPage" component={LineGraphPage} />
+          <Stack.Screen name="LineGraphPage" component={LineGraphPage} />
+          <Stack.Screen name="PieChartPage" component={PieChartPage} />
       </Stack.Navigator>
     );
   }

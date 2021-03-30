@@ -55,6 +55,8 @@ function UploadPost({ navigation }) {
         }).then(res => {
             console.log('postId: ', res.data)
             formData.append('postId', res.data)
+            console.log('username: ', username)
+            formData.append('username', username)
 
             axios.post(`${LOCAL}/upload/post`, formData, {
                 headers: {

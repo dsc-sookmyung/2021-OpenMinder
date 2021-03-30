@@ -46,6 +46,9 @@ public class PostService {
         return postRepository.selectNutrients(username);
     }
 
+    public List<Nutrient> findOneDayNutrientByUsername(String username) {
+        return postRepository.selectOneDayNutrient(username);
+    }
 
 
     public List<Post> findPosts(String postState) {

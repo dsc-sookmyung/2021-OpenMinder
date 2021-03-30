@@ -15,8 +15,8 @@ function dataPageRoot() {
             }}
         >
             <Stack.Screen name="CalendarPage" component={CalendarPage} />
-            <Stack.Screen name="LineGraphPage" component={PieChartPage} />
-            <Stack.Screen name="PieChartPage" component={LineGraphPage} />
+            <Stack.Screen name="LineGraphPage" component={LineGraphPage} />
+            <Stack.Screen name="PieChartPage" component={PieChartPage} />
         </Stack.Navigator>
     );
 }

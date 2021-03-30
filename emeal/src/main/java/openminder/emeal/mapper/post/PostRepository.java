@@ -33,6 +33,8 @@ public interface PostRepository {
 
     List<Nutrient> selectNutrients(String username);
 
+    List<Nutrient> selectOneDayNutrient(String username);
+
     void updateAccountInfo(Post post);
 
 }

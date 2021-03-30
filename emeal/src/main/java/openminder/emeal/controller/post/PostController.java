@@ -180,26 +180,7 @@ public class PostController {
             Nutrient nutrient = new Nutrient(NutrientType.MEAL, calorie, carbohydrate, protein, fat, sugars, sodium, cholesterol, fatty_acid, trans_fat, menu.getMenuId(), username);
             postService.uploadNutrient(nutrient);
         }
-        /*
-        Menu menu = new Menu("Almond", (long) id);
-        postService.uploadMenu(menu);
-        Nutrient nutrient = new Nutrient(NutrientType.MEAL, (long) 579, (long) 21, (long) 21, (long) 49, (long) 4, (long) 1, (long) 0, (long) 3, (long) 0, menu.getMenuId());
-        postService.uploadNutrient(nutrient);
 
-        menu.setMenuName("Soy Milk");
-        postService.uploadMenu(menu);
-        nutrient.setCalorie((long) 125);
-        nutrient.setCarbohydrate((long) 17);
-        nutrient.setSugars((long) 10);
-        nutrient.setCholesterol((long) 0);
-        nutrient.setFat((long) 4.5);
-        nutrient.setFattyAcid((long) 0.7);
-        nutrient.setProtein((long) 6.6);
-        nutrient.setSodium((long) 120);
-        nutrient.setTransFat((long) 0);
-        nutrient.setMenuId(menu.getMenuId());
-        postService.uploadNutrient(nutrient);
-        */
 
         UploadFileResponse uploadFileResponse = new UploadFileResponse(pictureName, pictureDownloadUri, picture.getContentType(), picture.getSize());
         return uploadFileResponse;

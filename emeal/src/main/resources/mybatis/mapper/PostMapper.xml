@@ -59,8 +59,8 @@
         </selectKey>
     </insert>
     <insert id="insertNutrient" parameterType="nutrient">
-        INSERT INTO nutrient(NUTRIENT_TYPE, CALORIE, CARBOHYDRATE, PROTEIN, FAT, SUGARS, SODIUM, CHOLESTEROL, FATTY_ACID, TRANS_FAT, MENU_ID)
-        VALUES (#{nutrientType}, #{calorie}, #{carbohydrate}, #{protein}, #{fat}, #{sugars}, #{sodium}, #{cholesterol}, #{fattyAcid}, #{transFat}, #{menuId})
+        INSERT INTO nutrient(NUTRIENT_TYPE, CALORIE, CARBOHYDRATE, PROTEIN, FAT, SUGARS, SODIUM, CHOLESTEROL, FATTY_ACID, TRANS_FAT, MENU_ID, USERNAME)
+        VALUES (#{nutrientType}, #{calorie}, #{carbohydrate}, #{protein}, #{fat}, #{sugars}, #{sodium}, #{cholesterol}, #{fattyAcid}, #{transFat}, #{menuId}, #{username})
     </insert>
 
     <select id="selectPosts" parameterType="String" resultMap="postResultMap">
@@ -93,6 +93,11 @@
     <select id="findNutrientByMenuId" parameterType="long" resultType="nutrient">
         SELECT * FROM nutrient
         WHERE menu_id = #{menuId}
+    </select>
+    <select id="selectOneDayNutrient" parameterType="String" resultType="nutrient">
+        SELECT * FROM nutrient
+        WHERE insert_time >= CURDATE()
+        AND username = #{username}
     </select>
 
     <update id="updateAccountInfo" parameterType="post">
