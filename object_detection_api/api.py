@@ -40,8 +40,18 @@ def predict(model_path, file_path):
     indexs = [i for i in range(num_det) if scores[i] > 0.9] # score 가 높은 결과만 리턴할 예정
     
     # 라벨 이름 셋팅
-    label_names = ['김밥', '양념치킨', '짜장면']
-    en_label_names = ['Gimbap', 'Chicken', 'Black-bean-sauce noodles']
+    en_label_names = []
+    with open("model/dict.txt", 'r') as labels:
+        lines = labels.readlines()
+        for line in lines:
+            en_label_names.append(line.rstrip())
+    print(en_label_names)
+    label_names = []
+    with open("model/ko_dict.txt", 'r', encoding='utf-8') as labels:
+        lines = labels.readlines()
+        for line in lines:
+            label_names.append(line.rstrip())
+    print(label_names)
 
     # 식품 영양 DB API 접근을 위한 셋팅
     with open('secret.json') as json_file:
@@ -56,8 +66,8 @@ def predict(model_path, file_path):
     for index in indexs:
         # 라벨 변환
         my_score = scores[index]
-        my_label = label_names[int(classes[index])]
-        my_en_label = en_label_names[int(classes[index])]
+        my_label = label_names[int(classes[index])+1]
+        my_en_label = en_label_names[int(classes[index])+1]
         food_dict = {'ko_label': my_label, 'en_label': my_en_label, 'score': my_score}
         # 중복 음식 저장 피하기
         if my_label in food_name_set: 
@@ -76,9 +86,16 @@ def predict(model_path, file_path):
             json_str = response.read().decode("utf-8")
             json_object = json.loads(json_str)
             df = pd.json_normalize(json_object['I2790']['row'])
+            df = df.fillna(0)
+            print(df)
             for i, name in enumerate(nut_names):
                 idxname = 'NUTR_CONT' + str(i+1)
-                value = int(float(df[idxname][0]))
+                df[idxname] = pd.to_numeric(df[idxname], downcast="float")
+                tmp = df[idxname][0]
+                if np.isnan(tmp) or tmp == 0:
+                    value = int(df[idxname].max())
+                else:
+                    value = int(df[idxname][0])
                 food_dict[name] = value
         # 각 메뉴 저장
         food_list.append(food_dict)

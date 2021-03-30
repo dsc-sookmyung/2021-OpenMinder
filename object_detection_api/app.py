@@ -67,12 +67,17 @@ def imgModel():
         df['xmax'] = df[3].apply(lambda x: min(img_width,(x * img_width)))
         boxes_scaled = df[['ymin', 'xmin', 'ymax', 'xmax']].to_numpy()
         draw = ImageDraw.Draw(img)
-        label_names = ['김밥', '양념치킨', '짜장면']
+        label_names = []
+        with open("model/ko_dict.txt", 'r', encoding='utf-8') as labels:
+            lines = labels.readlines()
+            for line in lines:
+                label_names.append(line.rstrip())
+        print(label_names)
         for i in range(num_det):
             if scores[i] > 0.5:
                 x1, y1, x2, y2 = boxes_scaled[i]
                 draw.rectangle(((x1, y1), (x2, y2)), outline=(0, 0, 255), width=1)
-                msg = label_names[int(classes[i])]
+                msg = label_names[int(classes[i])+1]
         pred_filename = "pred_" + f.filename
         img.save("static/"+pred_filename)
 
