@@ -19,10 +19,10 @@ class CalendarPage extends Component {
     //Account에서 물 값 가져와 물 value가 버튼 1번당 100씩 추가, 5번 누를 때마다 5개 물컵이 1개 큰컵으로 바뀜.
     renderChildDay(day) {
         if (_.includes(['2018-11-15', '2018-12-10', '2021-03-03'], day)) {
-            return <Image source={{ uri: image }} style={styles.icLockBig}></Image>
+            return <Image source={{ uri: '../Images/coffee-cup.png' }} style={styles.icLockBig}></Image>
         }
         if (_.includes(['2018-11-16', '2018-12-12', '2018-12-21', '2021-03-21'], day)) {
-            return <Image source={{ uri: image }} style={styles.icLocksmall}></Image>
+            return <Image source={{ uri: '../Images/coffee-cup.png' }} style={styles.icLocksmall}></Image>
         }
     }
 

@@ -14,6 +14,7 @@
         <typeAlias type="openminder.emeal.domain.post.Post" alias="post" />
         <typeAlias type="openminder.emeal.domain.post.Menu" alias="menu" />
         <typeAlias type="openminder.emeal.domain.post.Nutrient" alias="nutrient" />
+        <typeAlias type="openminder.emeal.domain.post.NutrientSum" alias="nutrientSum" />
         <typeAlias type="openminder.emeal.domain.file.Picture" alias="picture" />
     </typeAliases>
 </configuration>
