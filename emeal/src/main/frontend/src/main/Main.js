@@ -114,19 +114,6 @@ const Main = ({ navigation }) => {
       .catch(e => console.log(e))
   }
 
-  const renderCups = () => {
-    var output = [];
-    for (i = 0; i < 5; i++) {
-      var tempItem = (<Image
-        style={{ width: 10, height: 10 }}
-        source={{ uri: '../Images/coffee-cup.png' }}
-      />);
-      output[i] = (tempItem);
-    }
-    return (
-      output
-    );
-  };
 
   useEffect(() => {
     console.log('reload')
@@ -183,20 +170,17 @@ const Main = ({ navigation }) => {
           </View>
           <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', paddingLeft: 10, paddingRight: 10, paddingTop: 20, paddingBottom: 20 }}>
             <TouchableOpacity onPress={addWater} style={{ paddingLeft: 10 }}>
-              <View style={{ width: 70, height: 70, borderRadius: 25, backgroundColor: '#68c4e4', alignItems: 'center', justifyContent: 'center' }}>
-                <Icon name='arrow-up' />
-                <Text style={{ fontSize: 10 }}>+ Water</Text>
+              <View style={{ width: 70, height: 70, borderRadius: 25, backgroundColor: '#47b8e0', alignItems: 'center', justifyContent: 'center' }}>
+                <Icon name='water' />
+                <Text style={{ fontSize: 20 }}>+ 1</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={subWater} style={{ paddingLeft: 10 }}>
-              <View style={{ width: 70, height: 70, borderRadius: 25, backgroundColor: '#68c4e4', alignItems: 'center', justifyContent: 'center' }}>
-                <Icon name='arrow-down' />
-                <Text style={{ fontSize: 10 }}>- Water</Text>
+              <View style={{ width: 70, height: 70, borderRadius: 25, backgroundColor: '#47b8e0', alignItems: 'center', justifyContent: 'center' }}>
+                <Icon name='water' />
+                <Text style={{ fontSize: 20 }}>- 1</Text>
               </View>
             </TouchableOpacity>
-          </View>
-          <View>
-            {renderCups}
           </View>
           <View>
             <Text style={{ fontFamily: 'Comfortaa-Regular', fontSize: 15, paddingLeft: 10 }}>You drank {water} glasses of water today.</Text>

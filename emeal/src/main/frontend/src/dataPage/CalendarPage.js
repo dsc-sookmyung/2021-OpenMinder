@@ -10,27 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function CalendarPage() {
-
-    const user = useSelector(state => state.user);
     const [time, setTime] = useState('');
-
-    const getMenus = async (date) => {
-        alert(date);
-        /*
-        let name = await AsyncStorage.getItem('authenticatedUser');
-        let config = { params: { username: name, date: date } };
-        axios.get(`${LOCAL}/download/userOneday`, config)
-            .then(res => {
-                console.log('res.data: ', res.data);
-                alert(res.data);
-            })
-            .catch(e => console.log(e))
-        */
-    }
-
-    const onChangeDate = (date) => {
-        getMenus(date);
-    }
 
     //Account에서 물 값 가져와 물 value가 버튼 1번당 100씩 추가, 5번 누를 때마다 5개 물컵이 1개 큰컵으로 바뀜.
     const renderChildDay = (day) => {
