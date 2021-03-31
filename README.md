@@ -1,23 +1,33 @@
 # 2021 Solution Challenge :  Everyone’s meal
 * Team : Open Minder
 * Members : Heyju Jun, Juyeon Lee, Haram Lee, Minhye Shin
+- [2021 Solution Challenge :  Everyone’s meal](#2021-solution-challenge---everyones-meal)
+  - [Demo video](#demo-video)
+  - [How to run](#how-to-run)
+    - [1. Download this project](#1-download-this-project)
+    - [2. Run Object detection REST API server](#2-run-object-detection-rest-api-server)
+    - [3. Run Spring boot backend server](#3-run-spring-boot-backend-server)
+    - [4. Run React-native frontend client](#4-run-react-native-frontend-client)
+  - [Skill](#skill)
+  - [Contributors](#contributors)
 
 
 ## Demo video
 * You can see demo video on YOUTUBE : [Everyone's Meal | Google DSC Solution Challenge 2021](https://youtu.be/9S_JYTBmbzo)
+![Thumbnail](https://user-images.githubusercontent.com/35680202/113224348-2a8d1100-92c6-11eb-8312-2b4cc52cad44.png)
 
 
 ## How to run
-> 1. Download this project
+### 1. Download this project
 ```
 git clone https://github.com/dsc-sookmyung/2021-OpenMinder.git
 ```
 
-> 2. Run Object detection REST API server
+### 2. Run Object detection REST API server
 ```
 cd /path/to/2021-OpenMinder/object_detection_api/
 ```
-(1) Setting up a python virtual environment (Choose one of the two)
+#### (1) Setting up a python virtual environment (Choose one of the two)
 * In anaconda prompt
 ```
 conda create -n "test" python=3.7
@@ -30,7 +40,7 @@ cd /venvs/myproject/Scripts
 activate
 ```
 
-(2) Install libraries in virtual environment (Choose one of the two)
+#### (2) Install libraries in virtual environment (Choose one of the two)
 * Download using requirements.txt
 ```
 pip install -r requirements.txt
@@ -47,16 +57,16 @@ pip install werkzeug
 pip install pillow
 ```
 
-(3) Run server
+#### (3) Run server
 ```
 python api.py
 ```
 
-> 3. Run Spring boot backend server
+### 3. Run Spring boot backend server
 ```
 cd /path/to/2021-OpenMinder/emeal
 ```
-(1) Create an application.yml file
+#### (1) Create an application.yml file
 ```
 # in emeal/src/main/resources/application.yml
 # Make GCP SQL instance and enter the following items
@@ -85,32 +95,31 @@ file:
   upload_picture_dir: ./static/upload/picture
 ```
 
-(2) Build and Run server
+#### (2) Build and Run server
 
 
-> 4. Run React-native frontend client
+### 4. Run React-native frontend client
 ```
 cd /path/to/2021-OpenMinder/emeal/src/main/frontend/
 ```
-(1) Put your localhost IP address in the ipConfig.js file
+#### (1) Put your localhost IP address in the ipConfig.js file
 ```
 export const LOCAL = 'http://[YOUR IP ADDRESS]:8080';
 ```
 
-(2) Install android emulator
+#### (2) Install android emulator
 * If you don't have NDK version `21.0.6113669` in Android Studio SDK Tools, install it.
 
-(3) Install packages
+#### (3) Install packages
 ```
 yarn install
 yarn android
 ```
 
-(4) Run client
+#### (4) Run client
 ```
 react-native run-android
 ```
-
 
 ## Skill
 Frontend - React Native, Redux<br>
