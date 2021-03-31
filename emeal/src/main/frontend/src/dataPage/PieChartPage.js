@@ -54,11 +54,11 @@ class PieChartPage extends React.Component{
             data: {
                 dataSets: [{
                     //일단 value는 차트 값이 나와야 함으로 임의의 값으로 설정함.
-                    values: [{value: 30, label: '탄수화물'},
-                        {value: 20, label: '단백질'},
-                        {value: 20, label: '지방'},
-                        {value: 30, label: '기타'}],
-                    label: '<영양소 성분>',
+                    values: [{value: 30, label: 'Carbohydrate'},
+                        {value: 20, label: 'Protein'},
+                        {value: 20, label: 'Fat'},
+                        {value: 30, label: 'Etc'}],
+                    label: '<Nutrient composition>',
                     config: {
                         colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C'), processColor('#8CEAFF')],
                         valueTextSize: 15,

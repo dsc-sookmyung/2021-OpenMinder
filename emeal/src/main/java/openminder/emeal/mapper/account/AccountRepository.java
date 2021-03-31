@@ -37,6 +37,14 @@ public interface AccountRepository {
 
     int updateAccount(Account account);
 
+    int updateWaterPlus(String username);
+
+    int updateWaterMinus(String username);
+
+    int selectWater(String username);
+
+    int selectWeight(String username);
+
     void deleteAvatar(UploadFile avatar);
 
 }

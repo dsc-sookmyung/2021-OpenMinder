@@ -56,6 +56,14 @@
         SELECT * FROM attendance
         WHERE username = #{username} AND year_and_month = #{yearAndMonth} AND day = #{day}
     </select>
+    <select id="selectWater" parameterType="String" resultType="integer">
+        SELECT WATER FROM account
+        WHERE username = #{username}
+    </select>
+    <select id="selectWeight" parameterType="String" resultType="integer">
+        SELECT weight FROM account
+        WHERE username = #{username}
+    </select>
 
     <update id="updateAvatar" parameterType="uploadFile">
         UPDATE avatar SET
@@ -72,6 +80,16 @@
             HEIGHT = #{height},
             WEIGHT = #{weight},
             AGE = #{age}
+        WHERE username = #{username}
+    </update>
+    <update id="updateWaterPlus" parameterType="String">
+        UPDATE account SET
+        WATER = WATER + 1
+        WHERE username = #{username}
+    </update>
+    <update id="updateWaterMinus" parameterType="String">
+        UPDATE account SET
+        WATER = WATER - 1
         WHERE username = #{username}
     </update>
 

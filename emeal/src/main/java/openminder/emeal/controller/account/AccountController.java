@@ -98,8 +98,26 @@ public class AccountController {
 
     @PostMapping("/updateProfile")
     public int updateAccount(@RequestBody Account account) {
-        int result = accountService.updateAccount(account);
-        return result;
+        return accountService.updateAccount(account);
     }
 
+    @PostMapping("/update/waterPlus")
+    public int updateWaterPlus(@RequestParam("username") String username) {
+        return accountService.updateWaterPlus(username);
+    }
+
+    @PostMapping("/update/waterMinus")
+    public int updateWaterMinus(@RequestParam("username") String username) {
+        return accountService.updateWaterMinus(username);
+    }
+
+    @GetMapping("/download/userWater")
+    public int findWaterByUsername(@RequestParam("username") String username) {
+        return accountService.selectWater(username);
+    }
+
+    @GetMapping("/download/userWeight")
+    public int findWeightByUsername(@RequestParam("username") String username) {
+        return accountService.selectWeight(username);
+    }
 }

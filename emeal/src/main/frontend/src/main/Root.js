@@ -9,6 +9,7 @@ import SignIn from '../auth/SignIn';
 import SignUp from '../auth/SignUp';
 import Splash from './Splash';
 import HomeStackScreen from './HomeStackScreen';
+import DetailPage from '../community/DetailPage';
 
 
 const Stack = createStackNavigator();
@@ -59,6 +60,7 @@ console.log(user)
           ) : (
             <>
               <Stack.Screen name="Everyone's Meal" component={HomeStackScreen} /> 
+              <Stack.Screen name="DetailPage" component={DetailPage} />
               {/* <Stack.Screen name="Main" component={Main} /> 
               <Stack.Screen name="Welcome" component={Welcome} /> 
               <Stack.Screen name="PostDetailPage" component={PostDetailPage} />  */}

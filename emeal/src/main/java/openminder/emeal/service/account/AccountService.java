@@ -58,7 +58,22 @@ public class AccountService implements UserDetailsService {
     }
 
     public int updateAccount(Account account) {
-        int result = accountRepository.updateAccount(account);
-        return result;
+        return accountRepository.updateAccount(account);
+    }
+
+    public int updateWaterPlus(String username) {
+        return accountRepository.updateWaterPlus(username);
+    }
+
+    public int updateWaterMinus(String username) {
+        return accountRepository.updateWaterMinus(username);
+    }
+
+    public int selectWater(String username) {
+        return accountRepository.selectWater(username);
+    }
+
+    public int selectWeight(String username) {
+        return accountRepository.selectWeight(username);
     }
 }
