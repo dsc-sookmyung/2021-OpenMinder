@@ -1,18 +1,51 @@
-# 2021-OpenMinder
-## 팀원 소개
-* 팀명 : 오픈마인더(OpenMinder)
-* 팀원 : 신민혜, 이주연, 이하람, 전혜주
-* 팀장 : 이하람
+# 2021 Solution Challenge :  Everyone’s meal
+team : Open Minder
+<br>
+members : 
+<br>
 
-## 팀 활동 규칙
-* 팀회의시간 : 매주 (월), 목요일 저녁 8시, 회의 시간은 꼭 지킬 것, 불참시 최소 하루 전 공지
-* 호칭 : 언니 X, only 이름 OK
-* 블로그 작성 순서 : 이주연 -> 신민혜 -> 이하람 -> 전혜주
-* 인증샷 담당 순서 : 신민혜 -> 이하람 -> 전혜주 -> 이주연
-* 발표 순서 : 이하람 -> 전혜주 -> 이주연 -> 신민혜
-* 깃허브/블로그 마감 기한 : 월요일 회의 전까지
+## How to run
+1. Download this project
+2. Setting up a python virtual environment
+```
+python -m venv myproject
+cd /venvs/myproject/Scripts
+activate
+```
+3. Install Flask in virtual environment
+```
+python -m pip install --upgrade pip
+pip install Flask
+```
+4. Run Flask
+```
+python server.py
+``` 
+5. Install android and ios emulator <br>
+6. Go to frontend forder.<br>
+7. change ipconfig.js (change your localhost ip address)<br>
+8. add application.yml (Make GCP instance and write address and password)<br>
+9. yarn install<br>
+10.yarn android
+<br>
 
-## 대략적인 목표
-* 프로젝트를 진행하면서 라이브러리들을 사용해보고, 심화적으로 오픈소스 스터디를 진행한다.
-  * 딥러닝 스터디 : CNN
-  * 백엔드 스터디 : 스프링부트 심화
+## Skill
+Frontend - React Native, Redux<br>
+Backend - SpringBoot, Flask
+<br>
+
+## Contributors
+<div>
+<a href="https://github.com/hrxorxm">
+  <img src="https://github.com/hrxorxm.png" width="50" height="50" >
+</a>
+    <a href="https://github.com/hyeju1123">
+  <img src="https://github.com/hyeju1123.png" width="50" height="50" >
+</a>
+    <a href="https://github.com/minn12">
+  <img src="https://github.com/minn12.png" width="50" height="50" >
+</a>
+    <a href="https://github.com/juyonLee00">
+  <img src="https://github.com/juyonLee00.png" width="50" height="50" >
+</a>
+
