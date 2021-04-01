@@ -57,7 +57,16 @@ pip install werkzeug
 pip install pillow
 ```
 
-#### (3) Run server
+#### (3) Create an secret.json file
+* Receive the food nutrition DB API key and enter it into the file
+* [The Food Nutrition DB Link](https://www.foodsafetykorea.go.kr/api/openApiInfo.do?menu_grp=MENU_GRP31&menu_no=661&show_cnt=10&start_idx=1&svc_no=I2790&svc_type_cd=API_TYPE06)
+```
+{
+    "accesskey": [YOUR API KEY]
+}
+```
+
+#### (4) Run server
 ```
 python api.py
 ```
