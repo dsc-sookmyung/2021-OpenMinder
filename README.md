@@ -130,7 +130,7 @@ yarn android
 react-native run-android
 ```
 
-## Skill
+## Skills
 Frontend - React Native, Redux<br>
 Backend - SpringBoot, Flask
 <br>
